@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wechat/pages/post.dart';
+
+import 'pages/index.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const PostEditPage(),
+      home: const TimeLinePage(),
     );
   }
 }
