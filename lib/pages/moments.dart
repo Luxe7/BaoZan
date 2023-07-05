@@ -22,7 +22,6 @@ class _MomentsPageState extends State<MomentsPage> {
           // 判断是否滑动到顶部
           if (notification.metrics.pixels < 200) {
             // 滑动到顶部
-            print('滑动到顶部');
             isTop = true;
           } else {
             isTop = false;
@@ -77,9 +76,161 @@ class _MomentsPageState extends State<MomentsPage> {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
+                  var favorateList = ['张三', '李四', '王五', '赵六', '田七'];
+                  // 仿造朋友圈的列表
                   return Container(
-                    height: 100,
-                    color: Colors.primaries[index % Colors.primaries.length],
+                    // 分割线
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? const Color(0xffe5e5e5)
+                                  : const Color(0xff242424),
+                          width: 0.5,
+                        ),
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // 头像
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Image.asset(
+                                'images/avatar.jpg',
+                                width: 48,
+                                height: 48,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            // 名称
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '花开富贵',
+                                  style: TextStyle(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? const Color(0xff596b91)
+                                        : const Color(0xff808fa5),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+
+                                const SizedBox(height: 10),
+                                // 内容
+                                const Text(
+                                  '今天天气真好，我想出去玩',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                const SizedBox(height: 10),
+                                // 图片
+                                Wrap(
+                                  spacing: 5,
+                                  runSpacing: 5,
+                                  children: [
+                                    Image.asset(
+                                      'images/moments.jpg',
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    Image.asset(
+                                      'images/moments.jpg',
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    Image.asset(
+                                      'images/moments.jpg',
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  '1分钟前',
+                                  style: TextStyle(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? const Color(0xffb3b3b3)
+                                        : const Color(0xff5d5d5d),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                // 点赞列表
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? const Color(0xfff7f7f7)
+                                        : const Color(0xff202020),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 5,
+                                  ),
+                                  child: DefaultTextStyle(
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? const Color(0xff596b91)
+                                          : const Color(0xff808fa5),
+                                      fontSize: 14,
+                                    ),
+                                    child: Wrap(
+                                      children: favorateList.map((e) {
+                                        if (favorateList.indexOf(e) == 0) {
+                                          return Row(
+                                            children: [
+                                              Icon(
+                                                CupertinoIcons.heart,
+                                                size: 14,
+                                                color: Theme.of(context)
+                                                            .brightness ==
+                                                        Brightness.light
+                                                    ? const Color(0xff596b91)
+                                                    : const Color(0xff808fa5),
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(e),
+                                              const Text('，')
+                                            ],
+                                          );
+                                        } else if (favorateList.indexOf(e) ==
+                                            favorateList.length - 1) {
+                                          return Text(e);
+                                        }
+                                        return Row(
+                                          children: [Text(e), const Text('，')],
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+
+                                const SizedBox(height: 10),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 },
                 childCount: 100,

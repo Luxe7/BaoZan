@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:wechat/utils/config.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
