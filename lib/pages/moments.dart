@@ -40,6 +40,7 @@ class _MomentsPageState extends State<MomentsPage> {
                 isTop ? '' : '朋友圈',
                 style: const TextStyle(fontSize: 18),
               ),
+              centerTitle: true,
               // 左边返回
               leading: IconButton(
                 onPressed: () {},
