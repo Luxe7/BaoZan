@@ -12,19 +12,26 @@ class PostEditPage extends StatefulWidget {
 
 class _PostEditPageState extends State<PostEditPage> {
   //已选中图片列表
-  List<AssetEntity> selectedAssets = [];
+  List<AssetEntity> _selectedAssets = [];
 
   //是否开始拖拽
-  bool isDragNow = false;
+  bool _isDragNow = false;
 
   //是否将要删除
-  bool isWillRemove = false;
+  bool _isWillRemove = false;
 
   //是否将要排序
-  bool isWillOrder = false;
+  bool _isWillOrder = false;
 
   //被拖拽到的ID
-  String targetAssetId = "";
+  String _targetAssetId = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _selectedAssets = widget.selectedAssets ?? [];
+  }
 
 //图片列表
   Widget _buildPhotosList() {
@@ -39,9 +46,10 @@ class _PostEditPageState extends State<PostEditPage> {
             runSpacing: spacing,
             children: [
               //图片
-              for (final asset in selectedAssets) _buildPhotoitem(asset, width),
+              for (final asset in _selectedAssets)
+                _buildPhotoitem(asset, width),
               //选择图片按钮
-              if (selectedAssets.length < maxAssets)
+              if (_selectedAssets.length < maxAssets)
                 _buildAddBtn(context, width)
             ],
           );
@@ -59,7 +67,7 @@ class _PostEditPageState extends State<PostEditPage> {
           return;
         }
         setState(() {
-          selectedAssets = result;
+          _selectedAssets = result;
         });
       },
       child: Container(
@@ -83,14 +91,14 @@ class _PostEditPageState extends State<PostEditPage> {
 
       onDragStarted: () {
         setState(() {
-          isDragNow = true;
+          _isDragNow = true;
         });
       },
 
       onDragEnd: (details) {
         setState(() {
-          isDragNow = false;
-          isWillOrder = false;
+          _isDragNow = false;
+          _isWillOrder = false;
         });
       },
 //当被放置并且被Drag Target接受时调用
@@ -98,19 +106,19 @@ class _PostEditPageState extends State<PostEditPage> {
 
       onDraggableCanceled: (velocity, offset) {
         setState(() {
-          isDragNow = false;
-          isWillOrder = false;
+          _isDragNow = false;
+          _isWillOrder = false;
         });
       },
       //拖动进行时显示在指针下方的小部件
       feedback: Container(
         clipBehavior: Clip.antiAlias,
-        padding: (isWillOrder && targetAssetId == asset.id)
+        padding: (_isWillOrder && _targetAssetId == asset.id)
             ? EdgeInsets.zero
             : EdgeInsets.all(imagePadding),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(3),
-          border: (isWillOrder && targetAssetId == asset.id)
+          border: (_isWillOrder && _targetAssetId == asset.id)
               ? Border.all(
                   color: accentColor,
                   width: imagePadding,
@@ -154,27 +162,27 @@ class _PostEditPageState extends State<PostEditPage> {
         },
         onWillAccept: (data) {
           setState(() {
-            isWillOrder = true;
-            targetAssetId = asset.id;
+            _isWillOrder = true;
+            _targetAssetId = asset.id;
           });
           return true;
         },
         onAccept: (data) {
           //队列中删除拖拽对象
-          final int index = selectedAssets.indexOf(data);
-          selectedAssets.removeAt(index);
+          final int index = _selectedAssets.indexOf(data);
+          _selectedAssets.removeAt(index);
           //将拖拽对象插入到目标对象之前
-          final int targetIndex = selectedAssets.indexOf(asset);
-          selectedAssets.insert(targetIndex, data);
+          final int targetIndex = _selectedAssets.indexOf(asset);
+          _selectedAssets.insert(targetIndex, data);
           setState(() {
-            isWillOrder = false;
-            targetAssetId = "";
+            _isWillOrder = false;
+            _targetAssetId = "";
           });
         },
         onLeave: (data) {
           setState(() {
-            isWillOrder = false;
-            targetAssetId = "";
+            _isWillOrder = false;
+            _targetAssetId = "";
           });
         },
       ),
@@ -189,20 +197,20 @@ class _PostEditPageState extends State<PostEditPage> {
           width: double.infinity,
           child: Container(
             height: 100,
-            color: isWillRemove ? Colors.red[300] : Colors.red[200],
+            color: _isWillRemove ? Colors.red[300] : Colors.red[200],
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               //图标
               Icon(
                 Icons.delete,
                 size: 32,
-                color: isWillRemove ? Colors.white : Colors.white70,
+                color: _isWillRemove ? Colors.white : Colors.white70,
               ),
               //文字
               Text(
                 "拖拽到这里删除",
                 style: TextStyle(
-                    color: isWillRemove ? Colors.white : Colors.white70),
+                    color: _isWillRemove ? Colors.white : Colors.white70),
               )
             ]),
           ),
@@ -212,21 +220,21 @@ class _PostEditPageState extends State<PostEditPage> {
       //将要被接受
       onWillAccept: (data) {
         setState(() {
-          isWillRemove = true;
+          _isWillRemove = true;
         });
         return true;
       },
 
       onAccept: (data) {
         setState(() {
-          selectedAssets.remove(data);
-          isWillRemove = false;
+          _selectedAssets.remove(data);
+          _isWillRemove = false;
         });
       },
 
       onLeave: (data) {
         setState(() {
-          isWillRemove = false;
+          _isWillRemove = false;
         });
       },
     );
@@ -251,7 +259,7 @@ class _PostEditPageState extends State<PostEditPage> {
         title: const Text("发布"),
       ),
       body: _mainView(),
-      bottomSheet: isDragNow ? _buildRemoveBar() : null,
+      bottomSheet: _isDragNow ? _buildRemoveBar() : null,
     );
   }
 }
