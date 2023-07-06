@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wechat/pages/index.dart';
 import 'package:wechat/pages/post.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+
+import '../utils/bottom_sheet.dart';
 
 class MomentsPage extends StatefulWidget {
   const MomentsPage({super.key});
@@ -46,13 +50,31 @@ class _MomentsPageState extends State<MomentsPage> {
                 icon: const Icon(CupertinoIcons.back),
               ),
               // 右边照相
+              // actions: [
+              //   IconButton(
+              //     onPressed: () {
+              //       Navigator.of(context).push(CupertinoPageRoute(
+              //         builder: (context) =>
+              //             const TimeLinePage(), //PostEditPage(),
+              //       ));
+              //     },
+              //     icon: const Icon(Icons.camera_alt),
+              //   ),
+              // ],
               actions: [
                 IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (context) => const PostEditPage(),
-                    ));
-                  },
+                  onPressed: (() async {
+                    final result = await DuBottomSheet()
+                        .wxPicker<List<AssetEntity>>(context);
+                    if (result == null || result.isEmpty) {
+                      return;
+                    }
+                    //把数据压入发布界面
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: ((context) {
+                      return PostEditPage(selectedAssets: result);
+                    })));
+                  }),
                   icon: const Icon(Icons.camera_alt),
                 ),
               ],
