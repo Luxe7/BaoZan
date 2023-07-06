@@ -16,12 +16,25 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '朋友圈模拟器',
       theme: ThemeData(
-        useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xffeeeeee),
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.black),
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+          ),
+        ),
       ),
       //home: const TimeLinePage(),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        useMaterial3: true,
+        scaffoldBackgroundColor: const Color(0xff191919),
+        colorScheme: const ColorScheme.dark(
+          background: Color(0xff191919),
+          surface: Color(0xff191919),
+        ),
+        splashColor: Colors.white30,
       ),
       home: const MomentsPage(),
     );

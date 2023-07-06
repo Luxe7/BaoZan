@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wechat/models/moment.dart';
 import 'package:wechat/pages/index.dart';
 import 'package:wechat/pages/post.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../utils/bottom_sheet.dart';
+
+const _expandedHeight = 360.0;
 
 class MomentsPage extends StatefulWidget {
   const MomentsPage({super.key});
@@ -16,6 +19,13 @@ class MomentsPage extends StatefulWidget {
 class _MomentsPageState extends State<MomentsPage> {
   final ScrollController _controller = ScrollController();
   var isTop = true;
+  List<Moment> moments = [];
+  @override
+  void initState() {
+    super.initState();
+    moments = Moment.mocks();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +34,7 @@ class _MomentsPageState extends State<MomentsPage> {
       body: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification notification) {
           // 判断是否滑动到顶部
-          if (notification.metrics.pixels < 200) {
+          if (notification.metrics.pixels < _expandedHeight) {
             // 滑动到顶部
             isTop = true;
           } else {
@@ -63,23 +73,26 @@ class _MomentsPageState extends State<MomentsPage> {
               // ],
               actions: [
                 IconButton(
-                  onPressed: (() async {
-                    final result = await DuBottomSheet()
-                        .wxPicker<List<AssetEntity>>(context);
-                    if (result == null || result.isEmpty) {
-                      return;
-                    }
-                    //把数据压入发布界面
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: ((context) {
-                      return PostEditPage(selectedAssets: result);
-                    })));
+                  onPressed: (() {
+                    DuBottomSheet()
+                        .wxPicker<List<AssetEntity>>(context)
+                        .then((result) {
+                      if (result == null || result.isEmpty) {
+                        return;
+                      }
+                      //把数据压入发布界面
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: ((context) {
+                        return PostEditPage(selectedAssets: result);
+                      })));
+                    });
                   }),
-                  icon: const Icon(Icons.camera_alt),
+                  icon: Icon(
+                      isTop ? Icons.camera_alt : Icons.camera_alt_outlined),
                 ),
               ],
               // 伸缩的高度
-              expandedHeight: 200,
+              expandedHeight: _expandedHeight,
               stretch: true,
               pinned: true,
               // 伸缩的内容
@@ -99,6 +112,8 @@ class _MomentsPageState extends State<MomentsPage> {
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   var favorateList = ['张三', '李四', '王五', '赵六', '田七'];
+
+                  var moment = moments[index];
                   // 仿造朋友圈的列表
                   return Container(
                     // 分割线
@@ -114,7 +129,7 @@ class _MomentsPageState extends State<MomentsPage> {
                       ),
                     ),
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
+                      horizontal: 10,
                       vertical: 10,
                     ),
                     child: Column(
@@ -150,38 +165,58 @@ class _MomentsPageState extends State<MomentsPage> {
                                   ),
                                 ),
 
-                                const SizedBox(height: 10),
+                                const SizedBox(height: 5),
                                 // 内容
                                 const Text(
                                   '今天天气真好，我想出去玩',
-                                  style: TextStyle(fontSize: 16),
+                                  style: TextStyle(fontSize: 18),
                                 ),
                                 const SizedBox(height: 10),
                                 // 图片
-                                Wrap(
-                                  spacing: 5,
-                                  runSpacing: 5,
-                                  children: [
-                                    Image.asset(
-                                      'images/moments.jpg',
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.cover,
+                                if ((moment.pictures?.length ?? 0) > 1)
+                                  Container(
+                                    constraints: BoxConstraints(
+                                        maxHeight: 300,
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width /
+                                                2),
+                                    child: GridView.builder(
+                                      // 不允许滑动
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) =>
+                                          Image.network(
+                                        moment.pictures![index],
+                                        fit: BoxFit.cover,
+                                      ),
+                                      itemCount: moment.pictures?.length ?? 0,
+                                      gridDelegate: () {
+                                        // 2列
+                                        switch (moment.pictures?.length ?? 0) {
+                                          case 2:
+                                          case 4:
+                                            return const SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              crossAxisSpacing: 5,
+                                              mainAxisSpacing: 5,
+                                            );
+                                        }
+                                        // 3列
+                                        return const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                          crossAxisSpacing: 5,
+                                          mainAxisSpacing: 5,
+                                        );
+                                      }(),
+                                      shrinkWrap: true,
                                     ),
-                                    Image.asset(
-                                      'images/moments.jpg',
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    Image.asset(
-                                      'images/moments.jpg',
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                if ((moment.pictures?.length ?? 0) == 1)
+                                  Image.network(
+                                    moment.pictures![index],
+                                    fit: BoxFit.cover,
+                                  ),
+
                                 const SizedBox(height: 10),
                                 Text(
                                   '1分钟前',
@@ -190,7 +225,7 @@ class _MomentsPageState extends State<MomentsPage> {
                                             Brightness.light
                                         ? const Color(0xffb3b3b3)
                                         : const Color(0xff5d5d5d),
-                                    fontSize: 12,
+                                    fontSize: 14,
                                   ),
                                 ),
                                 const SizedBox(height: 5),
@@ -255,7 +290,7 @@ class _MomentsPageState extends State<MomentsPage> {
                     ),
                   );
                 },
-                childCount: 100,
+                childCount: moments.length,
               ),
             ),
           ],

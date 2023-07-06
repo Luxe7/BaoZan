@@ -23,15 +23,13 @@ class DuPicker {
   }
 
   ///底部弹出视图
-  static Future<T?> showModalSheet<T>(BuildContext context, {Widget? child}) {
+  static Future<T?> showModalSheet<T>(BuildContext context, Widget child) {
     return showModalBottomSheet<T>(
       context: context,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10), topRight: Radius.circular(10))),
       builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15),
+        return ClipRRect(
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           child: child,
         );
       },
