@@ -44,6 +44,7 @@ class _MomentsPageState extends State<MomentsPage> {
           return false;
         },
         child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
           controller: _controller,
           slivers: [
             SliverAppBar(
@@ -185,6 +186,7 @@ class _MomentsPageState extends State<MomentsPage> {
                                                   .width /
                                               2),
                                       child: GridView.builder(
+                                        padding: EdgeInsets.zero,
                                         // 不允许滑动
                                         physics:
                                             const NeverScrollableScrollPhysics(),
