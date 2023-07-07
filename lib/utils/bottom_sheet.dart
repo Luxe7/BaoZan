@@ -44,7 +44,7 @@ class DuBottomSheet {
   }
 
   void _popRoute(BuildContext context, {result}) {
-    Navigator.maybePop(context);
+    // Navigator.maybePop(context);
     Navigator.maybePop(context, result);
   }
 }
