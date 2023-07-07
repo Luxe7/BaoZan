@@ -81,10 +81,12 @@ class _MomentsPageState extends State<MomentsPage> {
                         return;
                       }
                       //把数据压入发布界面
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: ((context) {
-                        return PostEditPage(selectedAssets: result);
-                      })));
+                      if (mounted) {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: ((context) {
+                          return PostEditPage(selectedAssets: result);
+                        })));
+                      }
                     });
                   }),
                   icon: Icon(
