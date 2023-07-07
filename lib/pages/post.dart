@@ -59,7 +59,7 @@ class _PostEditPageState extends State<PostEditPage> {
   }
 
 //添加按钮
-  GestureDetector _buildAddBtn(BuildContext context, double width) {
+  Widget _buildAddBtn(BuildContext context, double width) {
     return GestureDetector(
       onTap: () async {
         var result = await DuPicker.assets(context: context);
