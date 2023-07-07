@@ -61,17 +61,6 @@ class _MomentsPageState extends State<MomentsPage> {
                 icon: const Icon(CupertinoIcons.back),
               ),
               // 右边照相
-              // actions: [
-              //   IconButton(
-              //     onPressed: () {
-              //       Navigator.of(context).push(CupertinoPageRoute(
-              //         builder: (context) =>
-              //             const TimeLinePage(), //PostEditPage(),
-              //       ));
-              //     },
-              //     icon: const Icon(Icons.camera_alt),
-              //   ),
-              // ],
               actions: [
                 IconButton(
                   onPressed: (() {
@@ -84,7 +73,7 @@ class _MomentsPageState extends State<MomentsPage> {
                       //把数据压入发布界面
                       if (mounted) {
                         Navigator.of(context)
-                            .push(MaterialPageRoute(builder: ((context) {
+                            .push(CupertinoPageRoute(builder: ((context) {
                           return PostEditPage(selectedAssets: result);
                         })));
                       }
