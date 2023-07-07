@@ -22,17 +22,15 @@ class DuBottomSheet {
             ),
             //从相册选择照片
             Btn(
-              child: const Text("从手机相册选择"),
-              onTap: () {
-                DuPicker.assets(
-                        context: context,
-                        requestType: RequestType.image,
-                        selectedAssets: selectedAssets)
-                    .then((result) {
+                child: const Text("从手机相册选择"),
+                onTap: () async {
+                  List<AssetEntity>? result;
+                  result = await DuPicker.assets(
+                      context: context,
+                      requestType: RequestType.image,
+                      selectedAssets: selectedAssets);
                   _popRoute(context, result: result);
-                });
-              },
-            ),
+                }),
             const SizedBox(height: 5),
             //取消
             Btn(
