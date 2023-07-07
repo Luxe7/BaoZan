@@ -11,3 +11,6 @@ const Color accentColor = Colors.amber;
 
 //图片padding
 const double imagePadding = 3;
+
+//页面padding大小
+const double pagePadding = 12;

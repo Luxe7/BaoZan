@@ -8,8 +8,8 @@ class DividerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height ?? 2,
-      color: Colors.grey.withOpacity(0.2),
+      height: height ?? 1.5,
+      color: Colors.grey.withOpacity(0.1),
     );
   }
 }

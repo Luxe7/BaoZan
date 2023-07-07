@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '朋友圈模拟器',
       theme: ThemeData(
+        primarySwatch: Colors.green,
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xffeeeeee),
           elevation: 0,
