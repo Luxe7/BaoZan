@@ -141,8 +141,8 @@ class _MomentsPageState extends State<MomentsPage> {
                             // 头像
                             ClipRRect(
                               borderRadius: BorderRadius.circular(5),
-                              child: Image.asset(
-                                'images/avatar.jpg',
+                              child: Image.network(
+                                moment.user?.avatar ?? '',
                                 width: 48,
                                 height: 48,
                                 fit: BoxFit.cover,
@@ -150,139 +150,190 @@ class _MomentsPageState extends State<MomentsPage> {
                             ),
                             const SizedBox(width: 10),
                             // 名称
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '花开富贵',
-                                  style: TextStyle(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? const Color(0xff596b91)
-                                        : const Color(0xff808fa5),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-
-                                const SizedBox(height: 5),
-                                // 内容
-                                const Text(
-                                  '今天天气真好，我想出去玩',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                const SizedBox(height: 10),
-                                // 图片
-                                if ((moment.pictures?.length ?? 0) > 1)
-                                  Container(
-                                    constraints: BoxConstraints(
-                                        maxHeight: 300,
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width /
-                                                2),
-                                    child: GridView.builder(
-                                      // 不允许滑动
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) =>
-                                          Image.network(
-                                        moment.pictures![index],
-                                        fit: BoxFit.cover,
-                                      ),
-                                      itemCount: moment.pictures?.length ?? 0,
-                                      gridDelegate: () {
-                                        // 2列
-                                        switch (moment.pictures?.length ?? 0) {
-                                          case 2:
-                                          case 4:
-                                            return const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              crossAxisSpacing: 5,
-                                              mainAxisSpacing: 5,
-                                            );
-                                        }
-                                        // 3列
-                                        return const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3,
-                                          crossAxisSpacing: 5,
-                                          mainAxisSpacing: 5,
-                                        );
-                                      }(),
-                                      shrinkWrap: true,
-                                    ),
-                                  ),
-                                if ((moment.pictures?.length ?? 0) == 1)
-                                  Image.network(
-                                    moment.pictures![index],
-                                    fit: BoxFit.cover,
-                                  ),
-
-                                const SizedBox(height: 10),
-                                Text(
-                                  '1分钟前',
-                                  style: TextStyle(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? const Color(0xffb3b3b3)
-                                        : const Color(0xff5d5d5d),
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                // 点赞列表
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? const Color(0xfff7f7f7)
-                                        : const Color(0xff202020),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 5,
-                                  ),
-                                  child: DefaultTextStyle(
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    moment.user?.name ?? '',
                                     style: TextStyle(
                                       color: Theme.of(context).brightness ==
                                               Brightness.light
                                           ? const Color(0xff596b91)
                                           : const Color(0xff808fa5),
-                                      fontSize: 14,
-                                    ),
-                                    child: Wrap(
-                                      children: favorateList.map((e) {
-                                        if (favorateList.indexOf(e) == 0) {
-                                          return Row(
-                                            children: [
-                                              Icon(
-                                                CupertinoIcons.heart,
-                                                size: 14,
-                                                color: Theme.of(context)
-                                                            .brightness ==
-                                                        Brightness.light
-                                                    ? const Color(0xff596b91)
-                                                    : const Color(0xff808fa5),
-                                              ),
-                                              const SizedBox(width: 5),
-                                              Text(e),
-                                              const Text('，')
-                                            ],
-                                          );
-                                        } else if (favorateList.indexOf(e) ==
-                                            favorateList.length - 1) {
-                                          return Text(e);
-                                        }
-                                        return Row(
-                                          children: [Text(e), const Text('，')],
-                                        );
-                                      }).toList(),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ),
 
-                                const SizedBox(height: 10),
-                              ],
+                                  const SizedBox(height: 5),
+                                  // 内容
+                                  Text(
+                                    moment.content ?? '',
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  // 图片
+                                  if ((moment.pictures?.length ?? 0) > 1)
+                                    Container(
+                                      constraints: BoxConstraints(
+                                          maxHeight: 300,
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2),
+                                      child: GridView.builder(
+                                        // 不允许滑动
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) =>
+                                            Image.network(
+                                          moment.pictures![index],
+                                          fit: BoxFit.cover,
+                                        ),
+                                        itemCount: moment.pictures?.length ?? 0,
+                                        gridDelegate: () {
+                                          // 2列
+                                          switch (
+                                              moment.pictures?.length ?? 0) {
+                                            case 2:
+                                            case 4:
+                                              return const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                crossAxisSpacing: 5,
+                                                mainAxisSpacing: 5,
+                                              );
+                                          }
+                                          // 3列
+                                          return const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            crossAxisSpacing: 5,
+                                            mainAxisSpacing: 5,
+                                          );
+                                        }(),
+                                        shrinkWrap: true,
+                                      ),
+                                    ),
+                                  if ((moment.pictures?.length ?? 0) == 1)
+                                    Image.network(
+                                      moment.pictures![index],
+                                      fit: BoxFit.cover,
+                                    ),
+
+                                  const SizedBox(height: 10),
+
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '1分钟前',
+                                        style: TextStyle(
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? const Color(0xffb3b3b3)
+                                              : const Color(0xff5d5d5d),
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      // 赞和评论的菜单按钮
+                                      // 菜单从左侧弹出，底色为#4c4c4c
+                                      PopupMenuButton(
+                                        itemBuilder: (context) {
+                                          return [
+                                            PopupMenuItem(
+                                              child: Text(
+                                                '赞',
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? const Color(0xff596b91)
+                                                      : const Color(0xff808fa5),
+                                                ),
+                                              ),
+                                            ),
+                                            PopupMenuItem(
+                                              child: Text(
+                                                '评论',
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? const Color(0xff596b91)
+                                                      : const Color(0xff808fa5),
+                                                ),
+                                              ),
+                                            ),
+                                          ];
+                                        },
+                                        child: Icon(
+                                          Icons.more_horiz,
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? const Color(0xffb3b3b3)
+                                              : const Color(0xff5d5d5d),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  // 点赞列表
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? const Color(0xfff7f7f7)
+                                          : const Color(0xff202020),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 5,
+                                    ),
+                                    child: DefaultTextStyle(
+                                      style: TextStyle(
+                                        color: Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? const Color(0xff596b91)
+                                            : const Color(0xff808fa5),
+                                        fontSize: 14,
+                                      ),
+                                      child: Wrap(
+                                        children: favorateList.map((e) {
+                                          return Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              if (favorateList.indexOf(e) ==
+                                                  0) ...[
+                                                Icon(
+                                                  CupertinoIcons.heart,
+                                                  size: 14,
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.light
+                                                      ? const Color(0xff596b91)
+                                                      : const Color(0xff808fa5),
+                                                ),
+                                                const SizedBox(width: 5),
+                                              ],
+                                              Text(e +
+                                                  ((favorateList.indexOf(e) !=
+                                                          favorateList.length -
+                                                              1)
+                                                      ? '，'
+                                                      : '')),
+                                            ],
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 10),
+                                ],
+                              ),
                             ),
                           ],
                         ),
