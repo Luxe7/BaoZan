@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:wechat/models/user.dart';
+
+import 'comment.dart';
 
 class Moment {
   String? id;
@@ -6,12 +10,16 @@ class Moment {
   String? content;
   List<String>? pictures;
   User? user;
+  List<User>? favorates;
+  List<Comment>? comments;
 
   Moment({
     this.id,
     this.content,
     this.pictures,
     this.user,
+    this.favorates,
+    this.comments,
   });
 
   Moment.fromJson(Map<String, dynamic>? json) {
@@ -20,6 +28,18 @@ class Moment {
     content = json?['content'];
     pictures = json?['pictures'].cast<String>();
     user = json?['user'] != null ? User.fromJson(json?['user']) : null;
+    if (json?['favorates'] != null) {
+      favorates = <User>[];
+      json?['favorates'].forEach((dynamic v) {
+        favorates?.add(User.fromJson(v));
+      });
+    }
+    if (json?['comments'] != null) {
+      comments = <Comment>[];
+      json?['comments'].forEach((dynamic v) {
+        comments?.add(Comment.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -30,6 +50,12 @@ class Moment {
     data['pictures'] = pictures;
     if (user != null) {
       data['user'] = user?.toJson();
+    }
+    if (favorates != null) {
+      data['favorates'] = favorates?.map((v) => v.toJson()).toList();
+    }
+    if (comments != null) {
+      data['comments'] = comments?.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -46,7 +72,67 @@ class Moment {
             id: '1',
             avatar: 'https://picsum.photos/250?image=9',
             name: '张三',
-          )),
+          ),
+          favorates: [
+            User(
+              id: '1',
+              avatar: 'https://picsum.photos/250?image=9',
+              name: '张三',
+            ),
+            User(
+              id: '2',
+              avatar: 'https://picsum.photos/250?image=21',
+              name: '李四',
+            ),
+            User(
+              id: '3',
+              avatar: 'https://picsum.photos/250?image=33',
+              name: '王五',
+            ),
+            User(
+              id: '4',
+              avatar: 'https://picsum.photos/250?image=37',
+              name: '赵六',
+            ),
+          ],
+          comments: [
+            Comment(
+              id: '1',
+              user: User(
+                id: '1',
+                avatar: 'https://picsum.photos/250?image=9',
+                name: '张三',
+              ),
+              content: '今天天气真好',
+            ),
+            Comment(
+              id: '2',
+              user: User(
+                id: '2',
+                avatar: 'https://picsum.photos/250?image=21',
+                name: '李四',
+              ),
+              content: '今天天气真好',
+            ),
+            Comment(
+              id: '3',
+              user: User(
+                id: '3',
+                avatar: 'https://picsum.photos/250?image=33',
+                name: '王五',
+              ),
+              content: '今天天气真好',
+            ),
+            Comment(
+              id: '4',
+              user: User(
+                id: '4',
+                avatar: 'https://picsum.photos/250?image=37',
+                name: '赵六',
+              ),
+              content: '今天天气真好',
+            ),
+          ]),
       Moment(
           id: '2',
           content: '今天天气真好',
@@ -172,5 +258,15 @@ class Moment {
             name: '钱十一',
           )),
     ];
+  }
+
+  static List<String> encode(List<Moment> moments) {
+    return moments.map((Moment moment) => jsonEncode(moment.toJson())).toList();
+  }
+
+  static List<Moment> decode(List<String> jsons) {
+    return jsons
+        .map((String json) => Moment.fromJson(jsonDecode(json)))
+        .toList();
   }
 }
