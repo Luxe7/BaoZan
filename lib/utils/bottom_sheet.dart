@@ -10,36 +10,44 @@ class DuBottomSheet {
   Future<T?> wxPicker<T>(BuildContext context) {
     return DuPicker.showModalSheet<T>(
         context,
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            //转发推文
-            const Btn(child: Text("转发推文")),
-            Container(
-              color: Colors.grey.withOpacity(0.2),
-              height: 1,
-            ),
-            //从相册选择照片
-            Btn(
-                child: const Text("从手机相册选择"),
+        DefaultTextStyle(
+          style: TextStyle(
+            fontSize: 16,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : const Color(0xff2c2c2c),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              //转发推文
+              const Btn(child: Text("转发推文")),
+              Container(
+                color: Colors.grey.withOpacity(0.2),
+                height: 0.5,
+              ),
+              //从相册选择照片
+              Btn(
+                  child: const Text("从手机相册选择"),
+                  onTap: () {
+                    DuPicker.assets(
+                            context: context,
+                            requestType: RequestType.image,
+                            selectedAssets: selectedAssets)
+                        .then((result) {
+                      Navigator.maybePop(context, result);
+                    });
+                  }),
+              const SizedBox(height: 5),
+              //取消
+              Btn(
+                child: const SafeArea(child: Text("取消")),
                 onTap: () {
-                  DuPicker.assets(
-                          context: context,
-                          requestType: RequestType.image,
-                          selectedAssets: selectedAssets)
-                      .then((result) {
-                    Navigator.maybePop(context, result);
-                  });
-                }),
-            const SizedBox(height: 5),
-            //取消
-            Btn(
-              child: const SafeArea(child: Text("取消")),
-              onTap: () {
-                Navigator.maybePop(context);
-              },
-            ),
-          ],
+                  Navigator.maybePop(context);
+                },
+              ),
+            ],
+          ),
         ));
   }
 }

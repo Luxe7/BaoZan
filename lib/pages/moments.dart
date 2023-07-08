@@ -106,7 +106,10 @@ class _MomentsPageState extends State<MomentsPage> {
                         Navigator.of(context)
                             .push(CupertinoPageRoute(builder: ((context) {
                           return PostEditPage(selectedAssets: result);
-                        })));
+                        }))).then((value) {
+                          moments.add(value);
+                          setState(() {});
+                        });
                       }
                     });
                   }),
@@ -148,12 +151,12 @@ class _MomentsPageState extends State<MomentsPage> {
                       ),
                     ),
                     // 头像左边的名字
-                    Positioned(
+                    const Positioned(
                       bottom: 32,
                       right: 92,
                       child: Text(
                         '张三',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -216,7 +219,7 @@ class _MomentsPageState extends State<MomentsPage> {
                     )
                   ];
 
-                  var moment = moments[index];
+                  var moment = moments[moments.length - index - 1];
                   // 仿造朋友圈的列表
                   return Container(
                     // 分割线
@@ -268,17 +271,19 @@ class _MomentsPageState extends State<MomentsPage> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-
+// 判断moment.content是否为空字符串
                                   const SizedBox(height: 5),
-                                  // 内容
-                                  Text(
-                                    moment.content ?? '',
-                                    style: const TextStyle(fontSize: 18),
-                                  ),
-                                  const SizedBox(height: 10),
+                                  if (moment.content?.isNotEmpty ?? false) ...[
+                                    // 内容
+                                    Text(
+                                      moment.content ?? '',
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
+                                    const SizedBox(height: 10),
+                                  ],
                                   // 图片
                                   if ((moment.pictures?.length ?? 0) > 1)
-                                    Container(
+                                    Padding(
                                       padding: const EdgeInsets.only(right: 48),
                                       child: GridView.builder(
                                         padding: EdgeInsets.zero,
@@ -286,8 +291,8 @@ class _MomentsPageState extends State<MomentsPage> {
                                         physics:
                                             const NeverScrollableScrollPhysics(),
                                         itemBuilder: (context, index) =>
-                                            Image.network(
-                                          moment.pictures![index],
+                                            ImagePicture(
+                                          url: moment.pictures![index],
                                           fit: BoxFit.cover,
                                         ),
                                         itemCount: moment.pictures?.length ?? 0,
@@ -314,9 +319,12 @@ class _MomentsPageState extends State<MomentsPage> {
                                       ),
                                     ),
                                   if ((moment.pictures?.length ?? 0) == 1)
-                                    Image.network(
-                                      moment.pictures![index],
-                                      fit: BoxFit.cover,
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 48),
+                                      child: ImagePicture(
+                                        url: moment.pictures![0],
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
 
                                   const SizedBox(height: 10),

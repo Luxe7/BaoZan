@@ -372,9 +372,14 @@ class _PostEditPageState extends State<PostEditPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text(
+          child: Text(
             "取消",
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(
+              fontSize: 18,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : const Color(0xff2c2c2c),
+            ),
           ),
         ),
         //右侧发表按钮
@@ -396,18 +401,21 @@ class _PostEditPageState extends State<PostEditPage> {
                       continue;
                     }
                     List<int> imageData = byteData.buffer.asUint8List();
-                    String base64Image = base64Encode(imageData);
+                    String base64Image =
+                        'data:image/png;base64,${base64Encode(imageData)}';
                     pictures.add(base64Image);
                   }
-                  moments.add(Moment(
-                      id: '1',
-                      content: _contentController.text,
-                      pictures: pictures,
-                      user: User(
-                        id: '1',
-                        avatar: 'https://picsum.photos/250?image=9',
-                        name: '张三',
-                      )));
+                  Navigator.maybePop(
+                      context,
+                      Moment(
+                          id: '1',
+                          content: _contentController.text,
+                          pictures: pictures,
+                          user: User(
+                            id: '1',
+                            avatar: 'https://picsum.photos/250?image=9',
+                            name: '张三',
+                          )));
                 },
                 child: const Text(
                   "发表",
