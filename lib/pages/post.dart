@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wechat/models/user.dart';
-import 'package:wechat/pages/moments.dart';
 import 'package:wechat/utils/Picker.dart';
 import 'package:wechat/utils/config.dart';
 import 'package:wechat/widgets/index.dart';
@@ -394,8 +393,9 @@ class _PostEditPageState extends State<PostEditPage> {
                 onPressed: () async {
                   List<String> pictures = [];
                   // 图片转换为base64
-                  for (var asset in _selectedAssets) {
-                    Uint8List? byteData = await asset.originBytes;
+                  for (AssetEntity asset in _selectedAssets) {
+                    Uint8List? byteData =
+                        await (await asset.file)?.readAsBytes();
                     // 图片为空
                     if (byteData == null) {
                       continue;
@@ -405,6 +405,7 @@ class _PostEditPageState extends State<PostEditPage> {
                         'data:image/png;base64,${base64Encode(imageData)}';
                     pictures.add(base64Image);
                   }
+                  // ignore: use_build_context_synchronously
                   Navigator.maybePop(
                       context,
                       Moment(

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wechat/pages/moments.dart';
 
 import '../models/moment.dart';
 import 'image_picture.dart';
@@ -14,6 +13,7 @@ class MomentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(moment.pictures);
     return Container(
       // 分割线
       decoration: BoxDecoration(
