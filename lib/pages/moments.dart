@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:wechat/models/moment.dart';
 import 'package:wechat/pages/index.dart';
 import 'package:wechat/pages/post.dart';
@@ -24,6 +25,15 @@ class _MomentsPageState extends State<MomentsPage> {
   void initState() {
     super.initState();
     moments = Moment.mocks();
+
+    // 状态栏透明
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.dark,
+      ),
+    );
   }
 
   @override
