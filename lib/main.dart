@@ -48,6 +48,21 @@ class MyApp extends StatelessWidget {
       //home: const TimeLinePage(),
       darkTheme: ThemeData(
         primarySwatch: Colors.green,
+        // 扩大圆角
+        filledButtonTheme: FilledButtonThemeData(
+            style: ButtonStyle(
+          backgroundColor: MaterialStateColor.resolveWith((states) {
+            if (states.contains(MaterialState.pressed)) {
+              return Colors.green.shade200;
+            }
+            return Colors.green;
+          }),
+          shape: MaterialStateProperty.all(
+            const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
+          ),
+        )),
         brightness: Brightness.dark,
         scaffoldBackgroundColor: const Color(0xff191919),
         colorScheme: const ColorScheme.dark(

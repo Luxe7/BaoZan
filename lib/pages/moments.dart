@@ -61,6 +61,8 @@ class _MomentsPageState extends State<MomentsPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isLightForeground =
+        (isTop || Theme.of(context).brightness == Brightness.dark);
     return Scaffold(
       // 上面是图片，可以伸缩，伸缩之后顶部出现标题，左边返回，右边是一个照相的图标
       // 监听滑动
@@ -83,7 +85,7 @@ class _MomentsPageState extends State<MomentsPage> {
           slivers: [
             SliverAppBar(
               toolbarHeight: 48,
-              systemOverlayStyle: isTop
+              systemOverlayStyle: isLightForeground
                   ? const SystemUiOverlayStyle(
                       statusBarColor: Colors.transparent,
                       statusBarIconBrightness: Brightness.light,
@@ -97,8 +99,9 @@ class _MomentsPageState extends State<MomentsPage> {
               // 顶部标题
               title: Text(
                 isTop ? '' : '朋友圈',
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 18,
+                    color: isLightForeground ? Colors.white : Colors.black,
                     // 加粗
                     fontWeight: FontWeight.bold),
               ),
@@ -106,13 +109,13 @@ class _MomentsPageState extends State<MomentsPage> {
               // 左边返回
               leading: IconButton(
                 onPressed: () {},
-                color: isTop ? Colors.white : Colors.black,
+                color: isLightForeground ? Colors.white : Colors.black,
                 icon: const Icon(CupertinoIcons.back),
               ),
               // 右边照相
               actions: [
                 IconButton(
-                  color: isTop ? Colors.white : Colors.black,
+                  color: isLightForeground ? Colors.white : Colors.black,
                   onPressed: (() {
                     DuBottomSheet()
                         .wxPicker<List<AssetEntity>>(context)
