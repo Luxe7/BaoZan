@@ -88,7 +88,6 @@ class _PostEditPageState extends State<PostEditPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _selectedAssets = widget.selectedAssets ?? [];
     _menus = [
@@ -180,7 +179,7 @@ class _PostEditPageState extends State<PostEditPage> {
         clipBehavior: Clip.antiAlias,
         padding: (_isWillOrder && _targetAssetId == asset.id)
             ? EdgeInsets.zero
-            : EdgeInsets.all(imagePadding),
+            : const EdgeInsets.all(imagePadding),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(3),
           border: (_isWillOrder && _targetAssetId == asset.id)
@@ -207,7 +206,7 @@ class _PostEditPageState extends State<PostEditPage> {
           height: width,
           fit: BoxFit.cover,
           isOriginal: false,
-          opacity: AlwaysStoppedAnimation(0.2),
+          opacity: const AlwaysStoppedAnimation(0.2),
         ),
       ),
       //子组件
@@ -238,7 +237,11 @@ class _PostEditPageState extends State<PostEditPage> {
           _selectedAssets.removeAt(index);
           //将拖拽对象插入到目标对象之前
           final int targetIndex = _selectedAssets.indexOf(asset);
-          _selectedAssets.insert(targetIndex, data);
+          if (targetIndex == -1) {
+            _selectedAssets.add(data);
+          } else {
+            _selectedAssets.insert(targetIndex, data);
+          }
           setState(() {
             _isWillOrder = false;
             _targetAssetId = "";
@@ -330,10 +333,7 @@ class _PostEditPageState extends State<PostEditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("发布"),
-      // ),
-      appBar: AppBarWidget(
+      appBar: AppBar(
         //左侧返回按钮
         leading: GestureDetector(
           onTap: () {
@@ -344,14 +344,37 @@ class _PostEditPageState extends State<PostEditPage> {
             color: Colors.black38,
           ),
         ),
+        // title: const Text("发布"),
         //右侧发表按钮
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: pagePadding),
-            child: ElevatedButton(onPressed: () {}, child: Text("发表")),
+          Center(
+            child: SizedBox(
+              width: 64,
+              height: 32,
+              child: ElevatedButton(onPressed: () {}, child: const Text("发表")),
+            ),
           )
         ],
       ),
+      // appBar: AppBarWidget(
+      //   //左侧返回按钮
+      //   leading: GestureDetector(
+      //     onTap: () {
+      //       Navigator.pop(context);
+      //     },
+      //     child: const Icon(
+      //       Icons.arrow_back_ios_new_outlined,
+      //       color: Colors.black38,
+      //     ),
+      //   ),
+      //   //右侧发表按钮
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: pagePadding),
+      //       child: ElevatedButton(onPressed: () {}, child: const Text("发表")),
+      //     )
+      //   ],
+      // ),
       body: _mainView(),
       bottomSheet: _isDragNow ? _buildRemoveBar() : null,
     );
