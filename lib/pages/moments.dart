@@ -45,6 +45,7 @@ class _MomentsPageState extends State<MomentsPage> {
       moments = Moment.mocks();
       // 保存
       saveData();
+      prefs?.setBool('first', false);
     } else {
       // 读取
       readData();
