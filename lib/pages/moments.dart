@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wechat/main.dart';
 import 'package:wechat/models/moment.dart';
 import 'package:wechat/pages/index.dart';
@@ -41,15 +42,21 @@ class _MomentsPageState extends State<MomentsPage> {
   @override
   void initState() {
     super.initState();
-    if (prefs?.getBool('first') ?? true) {
-      moments = Moment.mocks();
-      // 保存
-      saveData();
-      prefs?.setBool('first', false);
-    } else {
-      // 读取
-      readData();
-    }
+
+    // 初始化SharedPreferences
+    SharedPreferences.getInstance().then((SharedPreferences? value) {
+      prefs = value;
+      if (prefs?.getBool('first') ?? true) {
+        moments = Moment.mocks();
+        // 保存
+        saveData();
+        prefs?.setBool('first', false);
+      } else {
+        // 读取
+        readData();
+      }
+    });
+    
     // 状态栏透明
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -132,6 +139,9 @@ class _MomentsPageState extends State<MomentsPage> {
                         }))).then((value) {
                           moments.add(value);
                           setState(() {});
+
+                          // 保存
+                          saveData();
                         });
                       }
                     });
@@ -213,6 +223,12 @@ class _MomentsPageState extends State<MomentsPage> {
                   // 仿造朋友圈的列表
                   return MomentWidget(
                     moment: moment,
+                    onDelete: (moment) {
+                      moments.remove(moment);
+                      setState(() {});
+                      // 保存
+                      saveData();
+                    },
                   );
                 },
                 childCount: moments.length,

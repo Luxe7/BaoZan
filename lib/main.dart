@@ -7,10 +7,6 @@ SharedPreferences? prefs;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // 初始化SharedPreferences
-  SharedPreferences.getInstance().then((SharedPreferences? value) {
-    prefs = value;
-  });
   runApp(const MyApp());
 }
 

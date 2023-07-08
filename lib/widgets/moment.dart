@@ -13,7 +13,6 @@ class MomentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(moment.pictures);
     return Container(
       // 分割线
       decoration: BoxDecoration(
