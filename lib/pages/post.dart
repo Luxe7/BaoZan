@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wechat/utils/Picker.dart';
 import 'package:wechat/utils/config.dart';
+import 'package:wechat/widgets/index.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+
+import '../entity/index.dart';
 
 class PostEditPage extends StatefulWidget {
   const PostEditPage({Key? key, this.selectedAssets}) : super(key: key);
@@ -13,6 +16,63 @@ class PostEditPage extends StatefulWidget {
 class _PostEditPageState extends State<PostEditPage> {
   //已选中图片列表
   List<AssetEntity> _selectedAssets = [];
+
+  //内容输入控制器
+  TextEditingController _contentController = TextEditingController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _contentController.dispose();
+    super.dispose();
+  }
+
+  //内容输入框
+
+  Widget _buildContentInput() {
+    return Padding(
+      padding: const EdgeInsets.all(spacing),
+      child: LimitedBox(
+        maxHeight: 180,
+        child: TextField(
+          maxLines: null,
+          controller: _contentController,
+          decoration: const InputDecoration(
+            hintText: "这一刻的想法...",
+            hintStyle: TextStyle(
+              color: Colors.black26,
+              fontSize: 18,
+              //fontWeight: FontWeight.w500,
+            ),
+            border: InputBorder.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  //菜单列表
+  List<MenuItemModel> _menus = [];
+
+  //菜单项目
+  Widget _buildMenus() {
+    List<Widget> ws = [];
+    ws.add(const DividerWidget());
+    for (var menu in _menus) {
+      ws.add(ListTile(
+        leading: Icon(menu.icon),
+        title: Text(menu.title!),
+        trailing: Text(menu.right ?? ""),
+        onTap: menu.onTap,
+      ));
+      ws.add(const DividerWidget());
+    }
+    return Padding(
+      padding: const EdgeInsets.only(top: 100),
+      child: Column(
+        children: ws,
+      ),
+    );
+  }
 
   //是否开始拖拽
   bool _isDragNow = false;
@@ -31,6 +91,11 @@ class _PostEditPageState extends State<PostEditPage> {
     // TODO: implement initState
     super.initState();
     _selectedAssets = widget.selectedAssets ?? [];
+    _menus = [
+      MenuItemModel(icon: Icons.location_on_outlined, title: "所在位置"),
+      MenuItemModel(icon: Icons.location_on_outlined, title: "所在位置"),
+      MenuItemModel(icon: Icons.location_on_outlined, title: "所在位置"),
+    ];
   }
 
 //图片列表
@@ -242,21 +307,50 @@ class _PostEditPageState extends State<PostEditPage> {
 
 //主视图
   Widget _mainView() {
-    return Column(
-      children: [
-        //图片列表
-        _buildPhotosList(),
-        // const Spacer(),
-        // isDragNow ? _buildRemoveBar() : SizedBox.shrink(),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(pagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //内容输入
+          _buildContentInput(),
+
+          //图片列表
+          _buildPhotosList(),
+          // const Spacer(),
+          // isDragNow ? _buildRemoveBar() : SizedBox.shrink(),
+
+          //菜单
+          _buildMenus(),
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("发布"),
+      // appBar: AppBar(
+      //   title: const Text("发布"),
+      // ),
+      appBar: AppBarWidget(
+        //左侧返回按钮
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            color: Colors.black38,
+          ),
+        ),
+        //右侧发表按钮
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: pagePadding),
+            child: ElevatedButton(onPressed: () {}, child: Text("发表")),
+          )
+        ],
       ),
       body: _mainView(),
       bottomSheet: _isDragNow ? _buildRemoveBar() : null,
