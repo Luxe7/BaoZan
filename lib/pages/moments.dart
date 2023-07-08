@@ -2,19 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wechat/main.dart';
-import 'package:wechat/models/comment.dart';
 import 'package:wechat/models/moment.dart';
 import 'package:wechat/pages/index.dart';
 import 'package:wechat/pages/post.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
-import '../models/user.dart';
 import '../utils/bottom_sheet.dart';
 import '../widgets/image_picture.dart';
 import '../widgets/moment.dart';
 
 const _expandedHeight = 360.0;
 List<Moment> moments = [];
+
+// 保存数据
+void saveData() {
+  prefs?.setStringList('moments', Moment.encode(moments));
+}
+
+// 读取数据
+void readData() {
+  final data = prefs?.getStringList('moments');
+  if (data != null) {
+    moments = Moment.decode(data);
+  }
+}
 
 class MomentsPage extends StatefulWidget {
   const MomentsPage({super.key});
@@ -46,19 +57,6 @@ class _MomentsPageState extends State<MomentsPage> {
         statusBarBrightness: Brightness.dark,
       ),
     );
-  }
-
-  // 保存数据
-  void saveData() {
-    prefs?.setStringList('moments', Moment.encode(moments));
-  }
-
-  // 读取数据
-  void readData() {
-    final data = prefs?.getStringList('moments');
-    if (data != null) {
-      moments = Moment.decode(data);
-    }
   }
 
   @override

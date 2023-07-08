@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wechat/pages/moments.dart';
 
 import '../models/moment.dart';
 import 'image_picture.dart';
 
 class MomentWidget extends StatelessWidget {
-  const MomentWidget({super.key, required this.moment});
+  const MomentWidget({super.key, required this.moment, this.onDelete});
 
   final Moment moment;
+  // 删除事件
+  final Function(Moment)? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -154,6 +157,19 @@ class MomentWidget extends StatelessWidget {
                                         : const Color(0xff808fa5),
                                   ),
                                 ),
+                              ),
+                              // 删除按钮
+                              PopupMenuItem(
+                                child: Text(
+                                  '删除',
+                                  style: TextStyle(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? const Color(0xff596b91)
+                                        : const Color(0xff808fa5),
+                                  ),
+                                ),
+                                onTap: () => onDelete?.call(moment),
                               ),
                             ];
                           },
