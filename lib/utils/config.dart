@@ -1,7 +1,7 @@
 //间距
 import 'package:flutter/material.dart';
 
-const double spacing = 10.0;
+const double spacing = 12;
 
 //图片选取数量
 const int maxAssets = 9;
@@ -13,4 +13,4 @@ const Color accentColor = Colors.amber;
 const double imagePadding = 3;
 
 //页面padding大小
-const double pagePadding = 12;
+const double pagePadding = 24;

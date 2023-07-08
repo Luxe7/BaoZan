@@ -17,8 +17,18 @@ class MyApp extends StatelessWidget {
       title: '朋友圈模拟器',
       theme: ThemeData(
         primarySwatch: Colors.green,
+        // 扩大圆角
+        filledButtonTheme: FilledButtonThemeData(
+            style: ButtonStyle(
+          shape: MaterialStateProperty.all(
+            const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
+          ),
+        )),
+        scaffoldBackgroundColor: const Color(0xffffffff),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xffeeeeee),
+          backgroundColor: Color(0xffffffff),
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
           titleTextStyle: TextStyle(
@@ -29,11 +39,21 @@ class MyApp extends StatelessWidget {
       ),
       //home: const TimeLinePage(),
       darkTheme: ThemeData(
+        primarySwatch: Colors.green,
         brightness: Brightness.dark,
         scaffoldBackgroundColor: const Color(0xff191919),
         colorScheme: const ColorScheme.dark(
           background: Color(0xff191919),
           surface: Color(0xff191919),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xff191919),
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.black),
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+          ),
         ),
         splashColor: Colors.white30,
       ),

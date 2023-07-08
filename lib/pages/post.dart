@@ -1,10 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wechat/utils/Picker.dart';
 import 'package:wechat/utils/config.dart';
 import 'package:wechat/widgets/index.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
-
-import '../entity/index.dart';
 
 class PostEditPage extends StatefulWidget {
   const PostEditPage({Key? key, this.selectedAssets}) : super(key: key);
@@ -18,10 +17,9 @@ class _PostEditPageState extends State<PostEditPage> {
   List<AssetEntity> _selectedAssets = [];
 
   //内容输入控制器
-  TextEditingController _contentController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
   @override
   void dispose() {
-    // TODO: implement dispose
     _contentController.dispose();
     super.dispose();
   }
@@ -30,11 +28,13 @@ class _PostEditPageState extends State<PostEditPage> {
 
   Widget _buildContentInput() {
     return Padding(
-      padding: const EdgeInsets.all(spacing),
+      padding: const EdgeInsets.symmetric(
+          horizontal: pagePadding, vertical: spacing),
       child: LimitedBox(
         maxHeight: 180,
         child: TextField(
           maxLines: null,
+          minLines: 3,
           controller: _contentController,
           decoration: const InputDecoration(
             hintText: "这一刻的想法...",
@@ -50,26 +50,55 @@ class _PostEditPageState extends State<PostEditPage> {
     );
   }
 
-  //菜单列表
-  List<MenuItemModel> _menus = [];
+  // //菜单列表
+  // List<MenuItemModel> _menus = [];
 
   //菜单项目
   Widget _buildMenus() {
-    List<Widget> ws = [];
-    ws.add(const DividerWidget());
-    for (var menu in _menus) {
-      ws.add(ListTile(
-        leading: Icon(menu.icon),
-        title: Text(menu.title!),
-        trailing: Text(menu.right ?? ""),
-        onTap: menu.onTap,
-      ));
-      ws.add(const DividerWidget());
-    }
+    // List<Widget> ws = [];
+    // ws.add(const DividerWidget());
+    // for (var menu in _menus) {
+    //   ws.add(ListTile(
+    //     leading: Icon(menu.icon),
+    //     title: Text(menu.title!),
+    //     trailing: Text(menu.right ?? ""),
+    //     onTap: menu.onTap,
+    //   ));
+    //   ws.add(const DividerWidget());
+    // }
     return Padding(
       padding: const EdgeInsets.only(top: 100),
       child: Column(
-        children: ws,
+        children: [
+          const DividerWidget(),
+          ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),
+            leading: const Icon(Icons.location_on_outlined),
+            title: const Text("所在位置"),
+            // 向右的箭头
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {},
+          ),
+          const DividerWidget(),
+          ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),
+            leading: const Icon(CupertinoIcons.at),
+            title: const Text("提醒谁看"),
+            // 向右的箭头
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {},
+          ),
+          const DividerWidget(),
+          ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),
+            leading: const Icon(CupertinoIcons.person_alt),
+            title: const Text("谁可以看"),
+            // 向右的箭头
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {},
+          ),
+          const DividerWidget(),
+        ],
       ),
     );
   }
@@ -90,17 +119,17 @@ class _PostEditPageState extends State<PostEditPage> {
   void initState() {
     super.initState();
     _selectedAssets = widget.selectedAssets ?? [];
-    _menus = [
-      MenuItemModel(icon: Icons.location_on_outlined, title: "所在位置"),
-      MenuItemModel(icon: Icons.location_on_outlined, title: "所在位置"),
-      MenuItemModel(icon: Icons.location_on_outlined, title: "所在位置"),
-    ];
+    // _menus = [
+    //   MenuItemModel(icon: Icons.location_on_outlined, title: "所在位置"),
+    //   MenuItemModel(icon: Icons.location_on_outlined, title: "所在位置"),
+    //   MenuItemModel(icon: Icons.location_on_outlined, title: "所在位置"),
+    // ];
   }
 
 //图片列表
   Widget _buildPhotosList() {
     return Padding(
-      padding: const EdgeInsets.all(spacing),
+      padding: const EdgeInsets.symmetric(horizontal: pagePadding),
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           final double width =
@@ -135,13 +164,12 @@ class _PostEditPageState extends State<PostEditPage> {
         });
       },
       child: Container(
-        color: Colors.black12,
+        color: Colors.grey.withOpacity(0.05),
         width: width,
         height: width,
         child: const Icon(
-          Icons.add,
+          CupertinoIcons.add,
           size: 48,
-          color: Colors.black38,
         ),
       ),
     );
@@ -310,23 +338,20 @@ class _PostEditPageState extends State<PostEditPage> {
 
 //主视图
   Widget _mainView() {
-    return Padding(
-      padding: const EdgeInsets.all(pagePadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //内容输入
-          _buildContentInput(),
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      children: [
+        //内容输入
+        _buildContentInput(),
 
-          //图片列表
-          _buildPhotosList(),
-          // const Spacer(),
-          // isDragNow ? _buildRemoveBar() : SizedBox.shrink(),
+        //图片列表
+        _buildPhotosList(),
+        // const Spacer(),
+        // isDragNow ? _buildRemoveBar() : SizedBox.shrink(),
 
-          //菜单
-          _buildMenus(),
-        ],
-      ),
+        //菜单
+        _buildMenus(),
+      ],
     );
   }
 
@@ -334,47 +359,35 @@ class _PostEditPageState extends State<PostEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //左侧返回按钮
-        leading: GestureDetector(
-          onTap: () {
+        //左侧取消文字按钮
+        leadingWidth: 80,
+        leading: CupertinoButton(
+          onPressed: () {
             Navigator.pop(context);
           },
-          child: const Icon(
-            Icons.arrow_back_ios_new_outlined,
-            color: Colors.black38,
+          child: const Text(
+            "取消",
+            style: TextStyle(fontSize: 18),
           ),
         ),
-        // title: const Text("发布"),
         //右侧发表按钮
         actions: [
-          Center(
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(right: spacing),
             child: SizedBox(
-              width: 64,
-              height: 32,
-              child: ElevatedButton(onPressed: () {}, child: const Text("发表")),
+              width: 70,
+              height: 36,
+              child: FilledButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "发表",
+                    style: TextStyle(fontSize: 18),
+                  )),
             ),
           )
         ],
       ),
-      // appBar: AppBarWidget(
-      //   //左侧返回按钮
-      //   leading: GestureDetector(
-      //     onTap: () {
-      //       Navigator.pop(context);
-      //     },
-      //     child: const Icon(
-      //       Icons.arrow_back_ios_new_outlined,
-      //       color: Colors.black38,
-      //     ),
-      //   ),
-      //   //右侧发表按钮
-      //   actions: [
-      //     Padding(
-      //       padding: const EdgeInsets.only(right: pagePadding),
-      //       child: ElevatedButton(onPressed: () {}, child: const Text("发表")),
-      //     )
-      //   ],
-      // ),
       body: _mainView(),
       bottomSheet: _isDragNow ? _buildRemoveBar() : null,
     );
