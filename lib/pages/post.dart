@@ -1,9 +1,16 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wechat/models/user.dart';
+import 'package:wechat/pages/moments.dart';
 import 'package:wechat/utils/Picker.dart';
 import 'package:wechat/utils/config.dart';
 import 'package:wechat/widgets/index.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+
+import '../models/moment.dart';
 
 class PostEditPage extends StatefulWidget {
   const PostEditPage({Key? key, this.selectedAssets}) : super(key: key);
@@ -379,11 +386,34 @@ class _PostEditPageState extends State<PostEditPage> {
               width: 70,
               height: 36,
               child: FilledButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "发表",
-                    style: TextStyle(fontSize: 18),
-                  )),
+                onPressed: () async {
+                  List<String> pictures = [];
+                  // 图片转换为base64
+                  for (var asset in _selectedAssets) {
+                    Uint8List? byteData = await asset.originBytes;
+                    // 图片为空
+                    if (byteData == null) {
+                      continue;
+                    }
+                    List<int> imageData = byteData.buffer.asUint8List();
+                    String base64Image = base64Encode(imageData);
+                    pictures.add(base64Image);
+                  }
+                  moments.add(Moment(
+                      id: '1',
+                      content: _contentController.text,
+                      pictures: pictures,
+                      user: User(
+                        id: '1',
+                        avatar: 'https://picsum.photos/250?image=9',
+                        name: '张三',
+                      )));
+                },
+                child: const Text(
+                  "发表",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
             ),
           )
         ],

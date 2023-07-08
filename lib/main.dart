@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/index.dart';
 import 'package:wechat/pages/moments.dart';
 
+SharedPreferences? prefs;
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  // 初始化SharedPreferences
+  SharedPreferences.getInstance().then((SharedPreferences? value) {
+    prefs = value;
+  });
   runApp(const MyApp());
 }
 
@@ -28,7 +36,7 @@ class MyApp extends StatelessWidget {
         )),
         scaffoldBackgroundColor: const Color(0xffffffff),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xffffffff),
+          backgroundColor: Color(0xffeeeeee),
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
           titleTextStyle: TextStyle(
@@ -47,7 +55,7 @@ class MyApp extends StatelessWidget {
           surface: Color(0xff191919),
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xff191919),
+          backgroundColor: Color(0xff222222),
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
           titleTextStyle: TextStyle(
