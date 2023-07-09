@@ -11,7 +11,8 @@ class MomentWidget extends StatelessWidget {
       this.onDelete,
       this.onDetail,
       this.onLike,
-      this.onComment});
+      this.onComment,
+      this.isDetail = false});
 
   final Moment moment;
   // 删除事件
@@ -22,6 +23,7 @@ class MomentWidget extends StatelessWidget {
   final Function(Moment)? onLike;
   // 评论事件
   final Function(Moment)? onComment;
+  final bool isDetail;
 
   @override
   Widget build(BuildContext context) {

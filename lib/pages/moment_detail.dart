@@ -24,7 +24,10 @@ class _MomentDetailPageState extends State<MomentDetailPage> {
         ],
       ),
       body: SingleChildScrollView(
-        child: MomentWidget(moment: widget.moment),
+        child: MomentWidget(
+          moment: widget.moment,
+          isDetail: true,
+        ),
       ),
     );
   }
