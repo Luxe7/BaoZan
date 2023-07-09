@@ -11,6 +11,7 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import '../utils/bottom_sheet.dart';
 import '../widgets/image_picture.dart';
 import '../widgets/moment.dart';
+import 'moment_detail.dart';
 
 const _expandedHeight = 360.0;
 List<Moment> moments = [];
@@ -54,9 +55,10 @@ class _MomentsPageState extends State<MomentsPage> {
       } else {
         // 读取
         readData();
+        setState(() {});
       }
     });
-    
+
     // 状态栏透明
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -220,6 +222,7 @@ class _MomentsPageState extends State<MomentsPage> {
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   var moment = moments[moments.length - index - 1];
+
                   // 仿造朋友圈的列表
                   return MomentWidget(
                     moment: moment,
@@ -228,6 +231,12 @@ class _MomentsPageState extends State<MomentsPage> {
                       setState(() {});
                       // 保存
                       saveData();
+                    },
+                    onDetail: (moment) {
+                      Navigator.of(context)
+                          .push(CupertinoPageRoute(builder: ((context) {
+                        return MomentDetailPage(moment: moment);
+                      })));
                     },
                   );
                 },

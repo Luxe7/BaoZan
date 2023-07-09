@@ -5,11 +5,14 @@ import '../models/moment.dart';
 import 'image_picture.dart';
 
 class MomentWidget extends StatelessWidget {
-  const MomentWidget({super.key, required this.moment, this.onDelete});
+  const MomentWidget(
+      {super.key, required this.moment, this.onDelete, this.onDetail});
 
   final Moment moment;
   // 删除事件
   final Function(Moment)? onDelete;
+  // 进入详情页的事件
+  final Function(Moment)? onDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -133,9 +136,24 @@ class MomentWidget extends StatelessWidget {
                         // 赞和评论的菜单按钮
                         // 菜单从左侧弹出，底色为#4c4c4c
                         PopupMenuButton(
+                          onSelected: (value) {
+                            switch (value) {
+                              case '赞':
+                                break;
+                              case '评论':
+                                break;
+                              case '详情':
+                                onDetail?.call(moment);
+                                break;
+                              case '删除':
+                                onDelete?.call(moment);
+                                break;
+                            }
+                          },
                           itemBuilder: (context) {
                             return [
                               PopupMenuItem(
+                                value: '赞',
                                 child: Text(
                                   '赞',
                                   style: TextStyle(
@@ -147,6 +165,7 @@ class MomentWidget extends StatelessWidget {
                                 ),
                               ),
                               PopupMenuItem(
+                                value: '评论',
                                 child: Text(
                                   '评论',
                                   style: TextStyle(
@@ -157,19 +176,34 @@ class MomentWidget extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              // 删除按钮
-                              PopupMenuItem(
-                                child: Text(
-                                  '删除',
-                                  style: TextStyle(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? const Color(0xff596b91)
-                                        : const Color(0xff808fa5),
+                              // 进入详情页
+                              if (onDetail != null)
+                                PopupMenuItem(
+                                  value: '详情',
+                                  child: Text(
+                                    '详情',
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? const Color(0xff596b91)
+                                          : const Color(0xff808fa5),
+                                    ),
                                   ),
                                 ),
-                                onTap: () => onDelete?.call(moment),
-                              ),
+                              // 删除按钮
+                              if (onDelete != null)
+                                PopupMenuItem(
+                                  value: '删除',
+                                  child: Text(
+                                    '删除',
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? const Color(0xff596b91)
+                                          : const Color(0xff808fa5),
+                                    ),
+                                  ),
+                                ),
                             ];
                           },
                           child: Container(

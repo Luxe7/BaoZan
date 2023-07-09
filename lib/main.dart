@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/index.dart';
 import 'package:wechat/pages/moments.dart';
 
+import 'pages/moment_detail.dart';
+
 SharedPreferences? prefs;
 
 void main() {
