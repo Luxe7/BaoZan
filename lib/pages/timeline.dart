@@ -16,18 +16,7 @@ class _TimeLinePageState extends State<TimeLinePage> {
     return Center(
         child: ElevatedButton(
             onPressed: (() async {
-              DuBottomSheet()
-                  .wxPicker<List<AssetEntity>>(context)
-                  .then((result) {
-                if (result == null || result.isEmpty) {
-                  return;
-                }
-                //把数据压入发布界面
-                Navigator.of(context)
-                    .push(CupertinoPageRoute(builder: ((context) {
-                  return PostEditPage(selectedAssets: result);
-                })));
-              });
+              //
             }),
             child: const Text("发布")));
   }

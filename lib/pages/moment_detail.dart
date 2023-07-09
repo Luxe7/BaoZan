@@ -15,7 +15,7 @@ class _MomentDetailPageState extends State<MomentDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('朋友圈'),
+        title: const Text('详情'),
         actions: [
           IconButton(
             icon: const Icon(Icons.more_horiz),

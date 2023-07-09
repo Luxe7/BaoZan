@@ -6,9 +6,11 @@ import 'package:wechat/main.dart';
 import 'package:wechat/models/moment.dart';
 import 'package:wechat/pages/index.dart';
 import 'package:wechat/pages/post.dart';
+import 'package:wechat/utils/index.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../utils/bottom_sheet.dart';
+import '../utils/essay_analyser.dart';
 import '../widgets/image_picture.dart';
 import '../widgets/moment.dart';
 import 'moment_detail.dart';
@@ -90,7 +92,6 @@ class _MomentsPageState extends State<MomentsPage> {
           return false;
         },
         child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
           controller: _controller,
           slivers: [
             SliverAppBar(
@@ -127,24 +128,79 @@ class _MomentsPageState extends State<MomentsPage> {
                 IconButton(
                   color: isLightForeground ? Colors.white : Colors.black,
                   onPressed: (() {
-                    DuBottomSheet()
-                        .wxPicker<List<AssetEntity>>(context)
-                        .then((result) {
-                      if (result == null || result.isEmpty) {
+                    // 弹出底部菜单
+                    DuPicker.showModalSheet(
+                      context,
+                      const DuBottomSheet(),
+                    ).then((value) {
+                      if (value == null || value.isEmpty) {
                         return;
                       }
-                      //把数据压入发布界面
-                      if (mounted) {
-                        Navigator.of(context)
-                            .push(CupertinoPageRoute(builder: ((context) {
-                          return PostEditPage(selectedAssets: result);
-                        }))).then((value) {
-                          moments.add(value);
-                          setState(() {});
+                      switch (value) {
+                        case 'essay':
+                          // 弹出Dialog输入框
+                          TextEditingController link = TextEditingController();
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("转发推文"),
+                                content: TextField(
+                                  controller: link,
+                                  decoration: const InputDecoration(
+                                    hintText: "链接",
+                                    border: InputBorder.none,
+                                  ),
+                                  keyboardType: TextInputType.url,
+                                  autofocus: true,
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.maybePop(context);
+                                    },
+                                    child: const Text("取消"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      EssayAnalyzer.linkToEssay(link.text)
+                                          .then((value) {
+                                        moments.add(
+                                            Moment(user: myself, essay: value));
+                                        setState(() {});
 
-                          // 保存
-                          saveData();
-                        });
+                                        // 保存
+                                        saveData();
+                                        Navigator.maybePop(context);
+                                      });
+                                    },
+                                    child: const Text("发送"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        case 'images':
+                          //把数据压入发布界面
+                          List<AssetEntity> selectedAssets = [];
+                          DuPicker.assets(
+                                  context: context,
+                                  requestType: RequestType.image,
+                                  selectedAssets: selectedAssets)
+                              .then((assets) {
+                            if (mounted) {
+                              Navigator.of(context)
+                                  .push(CupertinoPageRoute(builder: ((context) {
+                                return PostEditPage(selectedAssets: value);
+                              }))).then((value) {
+                                moments.add(value);
+                                setState(() {});
+
+                                // 保存
+                                saveData();
+                              });
+                            }
+                          });
                       }
                     });
                   }),

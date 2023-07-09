@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:wechat/models/user.dart';
 
 import 'comment.dart';
+import 'essay.dart';
 
 class Moment {
   String? id;
@@ -12,6 +13,7 @@ class Moment {
   User? user;
   List<User>? favorates;
   List<Comment>? comments;
+  Essay? essay;
 
   Moment({
     this.id,
@@ -20,6 +22,7 @@ class Moment {
     this.user,
     this.favorates,
     this.comments,
+    this.essay,
   });
 
   Moment.fromJson(Map<String, dynamic>? json) {
@@ -40,6 +43,9 @@ class Moment {
         comments?.add(Comment.fromJson(v));
       });
     }
+    if (json?['essay'] != null) {
+      essay = Essay.fromJson(json?['essay']);
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -56,6 +62,9 @@ class Moment {
     }
     if (comments != null) {
       data['comments'] = comments?.map((v) => v.toJson()).toList();
+    }
+    if (essay != null) {
+      data['essay'] = essay?.toJson();
     }
     return data;
   }
@@ -134,128 +143,60 @@ class Moment {
             ),
           ]),
       Moment(
-          id: '2',
-          content: '今天天气真好',
-          pictures: <String>[
-            'https://picsum.photos/250?image=21',
-            'https://picsum.photos/250?image=22',
-          ],
-          user: User(
-            id: '2',
-            avatar: 'https://picsum.photos/250?image=21',
-            name: '李四',
-          )),
-      Moment(
-          id: '3',
-          content: '今天天气真好',
-          pictures: <String>[
-            'https://picsum.photos/250?image=33',
-            'https://picsum.photos/250?image=34',
-            'https://picsum.photos/250?image=35',
-          ],
-          user: User(
-            id: '3',
-            avatar: 'https://picsum.photos/250?image=33',
-            name: '王五',
-          )),
-      Moment(
-          id: '4',
-          content: '今天天气真好',
-          pictures: <String>[
-            'https://picsum.photos/250?image=37',
-            'https://picsum.photos/250?image=38',
-            'https://picsum.photos/250?image=39',
-            'https://picsum.photos/250?image=40',
-          ],
-          user: User(
-            id: '4',
-            avatar: 'https://picsum.photos/250?image=37',
-            name: '赵六',
-          )),
-      Moment(
-          id: '5',
-          content: '今天天气真好',
-          pictures: <String>[
-            'https://picsum.photos/250?image=41',
-            'https://picsum.photos/250?image=42',
-            'https://picsum.photos/250?image=43',
-            'https://picsum.photos/250?image=44',
-            'https://picsum.photos/250?image=45',
-          ],
-          user: User(
-            id: '5',
-            avatar: 'https://picsum.photos/250?image=41',
-            name: '孙七',
-          )),
-      Moment(
-          id: '6',
-          content: '今天天气真好',
-          pictures: <String>[
-            'https://picsum.photos/250?image=41',
-            'https://picsum.photos/250?image=42',
-            'https://picsum.photos/250?image=43',
-            'https://picsum.photos/250?image=44',
-            'https://picsum.photos/250?image=45',
-            'https://picsum.photos/250?image=46',
-          ],
-          user: User(
-            id: '6',
-            avatar: 'https://picsum.photos/250?image=41',
-            name: '周八',
-          )),
-      Moment(
-          id: '7',
-          content: '今天天气真好',
-          pictures: <String>[
-            'https://picsum.photos/250?image=41',
-            'https://picsum.photos/250?image=42',
-            'https://picsum.photos/250?image=43',
-            'https://picsum.photos/250?image=44',
-            'https://picsum.photos/250?image=45',
-            'https://picsum.photos/250?image=46',
-            'https://picsum.photos/250?image=47',
-          ],
-          user: User(
-            id: '7',
-            avatar: 'https://picsum.photos/250?image=41',
-            name: '吴九',
-          )),
-      Moment(
-          id: '8',
-          content: '今天天气真好',
-          pictures: <String>[
-            'https://picsum.photos/250?image=41',
-            'https://picsum.photos/250?image=42',
-            'https://picsum.photos/250?image=43',
-            'https://picsum.photos/250?image=44',
-            'https://picsum.photos/250?image=45',
-            'https://picsum.photos/250?image=46',
-            'https://picsum.photos/250?image=47',
-            'https://picsum.photos/250?image=48',
-          ],
-          user: User(
-            id: '8',
-            avatar: 'https://picsum.photos/250?image=41',
-            name: '郑十',
-          )),
-      Moment(
           id: '9',
           content: '今天天气真好',
           pictures: <String>[
             'https://picsum.photos/250?image=41',
             'https://picsum.photos/250?image=42',
             'https://picsum.photos/250?image=43',
-            'https://picsum.photos/250?image=44',
-            'https://picsum.photos/250?image=45',
-            'https://picsum.photos/250?image=46',
-            'https://picsum.photos/250?image=47',
-            'https://picsum.photos/250?image=48',
             'https://picsum.photos/250?image=49',
           ],
           user: User(
             id: '9',
             avatar: 'https://picsum.photos/250?image=41',
             name: '钱十一',
+          )),
+      Moment(
+          id: '10',
+          content: '今天天气真好',
+          pictures: <String>[
+            'https://picsum.photos/250?image=41',
+            'https://picsum.photos/250?image=42',
+            'https://picsum.photos/250?image=43',
+            'https://picsum.photos/250?image=49',
+          ],
+          user: User(
+            id: '9',
+            avatar: 'https://picsum.photos/250?image=41',
+            name: '钱十一',
+          ),
+          favorates: [
+            User(
+              id: '1',
+              avatar: 'https://picsum.photos/250?image=9',
+              name: '张三',
+            ),
+            User(
+              id: '2',
+              avatar: 'https://picsum.photos/250?image=21',
+              name: '李四',
+            ),
+            User(
+              id: '3',
+              avatar: 'https://picsum.photos/250?image=33',
+              name: '王五',
+            ),
+            User(
+              id: '4',
+              avatar: 'https://picsum.photos/250?image=37',
+              name: '赵六',
+            ),
+          ],
+          essay: Essay(
+            id: '1',
+            title: '今天天气真好',
+            description: '天气真好',
+            cover: 'https://picsum.photos/250?image=9',
           )),
     ];
   }

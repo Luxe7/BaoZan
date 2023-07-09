@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'models/user.dart';
 import 'pages/index.dart';
 import 'package:wechat/pages/moments.dart';
 
-import 'pages/moment_detail.dart';
-
 SharedPreferences? prefs;
+
+User myself = User(
+  id: '1',
+  name: '小明',
+  avatar: 'https://picsum.photos/250?image=9',
+);
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,13 +20,17 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // 全局使用BouncingScrollPhysics的方法是，将ScrollConfiguration包裹在MaterialApp外面，然后设置BouncingScrollPhysics
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: '朋友圈模拟器',
       theme: ThemeData(
+        pageTransitionsTheme: const PageTransitionsTheme(builders: {
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        }),
         primarySwatch: Colors.green,
         // 扩大圆角
         filledButtonTheme: FilledButtonThemeData(
@@ -37,6 +46,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xffeeeeee),
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
+          centerTitle: true,
           titleTextStyle: TextStyle(
             color: Colors.black,
             fontSize: 18,
@@ -45,6 +55,10 @@ class MyApp extends StatelessWidget {
       ),
       //home: const TimeLinePage(),
       darkTheme: ThemeData(
+        pageTransitionsTheme: const PageTransitionsTheme(builders: {
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        }),
         primarySwatch: Colors.green,
         // 扩大圆角
         filledButtonTheme: FilledButtonThemeData(
@@ -71,6 +85,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xff222222),
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
+          centerTitle: true,
           titleTextStyle: TextStyle(
             color: Colors.black,
             fontSize: 18,
@@ -78,7 +93,18 @@ class MyApp extends StatelessWidget {
         ),
         splashColor: Colors.white30,
       ),
-      home: const MomentsPage(),
+      home: const ScrollConfiguration(
+        behavior: BouncingScrollBehavior(),
+        child: MomentsPage(),
+      ),
     );
   }
+}
+
+class BouncingScrollBehavior extends ScrollBehavior {
+  const BouncingScrollBehavior();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) =>
+      const BouncingScrollPhysics();
 }

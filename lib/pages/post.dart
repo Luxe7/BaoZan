@@ -345,7 +345,6 @@ class _PostEditPageState extends State<PostEditPage> {
 //主视图
   Widget _mainView() {
     return ListView(
-      physics: const BouncingScrollPhysics(),
       children: [
         //内容输入
         _buildContentInput(),

@@ -134,6 +134,39 @@ class MomentWidget extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
+                    if (moment.essay != null)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 48),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? const Color(0xfff5f5f5)
+                                    : const Color(0xff2a2a2a),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // 图片
+                              ImagePicture(
+                                url: moment.essay?.cover ?? '',
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                              Text(
+                                moment.essay?.title ?? '',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
 
                     const SizedBox(height: 10),
 
