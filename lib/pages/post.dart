@@ -8,6 +8,7 @@ import 'package:wechat/utils/Picker.dart';
 import 'package:wechat/utils/config.dart';
 import 'package:wechat/widgets/index.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+import 'package:wechat/utils/index.dart';
 
 import '../models/moment.dart';
 
@@ -89,10 +90,42 @@ class _PostEditPageState extends State<PostEditPage> {
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),
             leading: const Icon(CupertinoIcons.at),
-            title: const Text("提醒谁看"),
+            title: const Text("目标赞数"),
             // 向右的箭头
             trailing: const Icon(Icons.chevron_right),
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("目标赞数"),
+                    content: TextField(
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          final collectedNumber = int.tryParse(value);
+                        });
+                      },
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text("确定"),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // 关闭对话框
+                          // 在这里可以使用收集到的整数 collectedNumber
+                        },
+                      ),
+                      TextButton(
+                        child: Text("返回"),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // 关闭对话框
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
           ),
           const DividerWidget(),
           ListTile(
@@ -391,6 +424,7 @@ class _PostEditPageState extends State<PostEditPage> {
               child: FilledButton(
                 onPressed: () async {
                   List<String> pictures = [];
+                  List<User>? favorates = [];
                   // 图片转换为base64
                   for (AssetEntity asset in _selectedAssets) {
                     Uint8List? byteData =
@@ -408,14 +442,16 @@ class _PostEditPageState extends State<PostEditPage> {
                   Navigator.maybePop(
                       context,
                       Moment(
+                        id: '1',
+                        content: _contentController.text,
+                        pictures: pictures,
+                        user: User(
                           id: '1',
-                          content: _contentController.text,
-                          pictures: pictures,
-                          user: User(
-                            id: '1',
-                            avatar: 'https://picsum.photos/250?image=9',
-                            name: '张三',
-                          )));
+                          avatar: 'https://picsum.photos/250?image=9',
+                          name: '张三',
+                        ),
+                        favorates: _createFavorates(collectedNumber),
+                      ));
                 },
                 child: const Text(
                   "发表",
