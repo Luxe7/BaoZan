@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wechat/models/moment.dart';
 import 'package:wechat/widgets/moment.dart';
