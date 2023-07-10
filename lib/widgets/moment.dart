@@ -279,12 +279,17 @@ class MomentWidget extends StatelessWidget {
                                     // 使用头像网格，每个头像32，间隔为4，外面套一层Row，左边是爱心右边是头像
                                     Row(
                                         children: [
-                                          const Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 4.0),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 4.0),
                                             child: Icon(
                                               CupertinoIcons.heart,
-                                              size: 14,
+                                              color: Theme.of(context)
+                                                          .brightness ==
+                                                      Brightness.light
+                                                  ? const Color(0xff596b91)
+                                                  : const Color(0xff808fa5),
+                                              size: 16,
                                             ),
                                           ),
                                           const SizedBox(width: 4),
@@ -318,7 +323,7 @@ class MomentWidget extends StatelessWidget {
                                             WidgetSpan(
                                               child: Icon(
                                                 CupertinoIcons.heart,
-                                                size: 14,
+                                                size: 16,
                                                 color: Theme.of(context)
                                                             .brightness ==
                                                         Brightness.light
