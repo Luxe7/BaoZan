@@ -312,6 +312,11 @@ class _MomentsPageState extends State<MomentsPage> {
                       // 保存
                       saveData();
                     },
+                    onLike: (moment) {
+                      setState(() {});
+                      // 保存
+                      saveData();
+                    },
                     onDetail: (moment) {
                       Navigator.of(context)
                           .push(CupertinoPageRoute(builder: ((context) {

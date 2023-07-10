@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wechat/models/user.dart';
 import 'package:wechat/models/favorates.dart';
-import 'package:wechat/utils/config.dart';
 import 'package:wechat/widgets/index.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat/utils/index.dart';
@@ -50,7 +49,7 @@ class _PostEditPageState extends State<PostEditPage> {
           decoration: const InputDecoration(
             hintText: "这一刻的想法...",
             hintStyle: TextStyle(
-              color: Colors.black26,
+              // color: Colors.black26,
               fontSize: 18,
               //fontWeight: FontWeight.w500,
             ),
@@ -105,58 +104,15 @@ class _PostEditPageState extends State<PostEditPage> {
               ],
             ),
             onTap: () async {
-              await showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  int tempCollectedNumber = collectedNumber;
-                  return AlertDialog(
-                    title: const Text("目标赞数"),
-                    content:
-                        // 使用CupertinoPicker.builder
-                        ConstrainedBox(
-                      constraints: const BoxConstraints(maxHeight: 200),
-                      child: CupertinoPicker.builder(
-                        // 设置滚动个数
-                        itemExtent: 40,
-                        // 设置选中项
-                        //initialItemCount: 10,
-                        // 不允许负数出现
-                        scrollController: FixedExtentScrollController(
-                            initialItem: tempCollectedNumber),
-                        // 设置选中项
-                        onSelectedItemChanged: (int index) {
-                          tempCollectedNumber = index;
-                        },
-                        // 设置子项构造器
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index < 0) return null;
-                          return Center(
-                            child: Text(
-                              index.toString(),
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        child: const Text("取消"),
-                        onPressed: () {
-                          Navigator.of(context).maybePop();
-                        },
-                      ),
-                      TextButton(
-                        child: const Text("确定"),
-                        onPressed: () {
-                          collectedNumber = tempCollectedNumber;
-                          Navigator.of(context).maybePop();
-                        },
-                      ),
-                    ],
-                  );
-                },
+              var result = await DuPicker.selectNumber(
+                context,
+                title: "目标赞数",
+                min: 0,
+                max: 100,
+                value: collectedNumber,
               );
+              if (result != null) return;
+              collectedNumber = result;
               setState(() {});
             },
           ),
