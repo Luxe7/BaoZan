@@ -14,13 +14,6 @@ void count(collectedNumber) async {
   }
 }
 
-// Future<String> preconditioning(String imagePath) async {
-//   File imageFile = File(imagePath);
-//   Uint8List imageBytes = await imageFile.readAsBytes();
-//   String base64String = base64Encode(imageBytes);
-//   return base64String;
-// }
-
 List<String> createAvatar(collectedNumber) {
   count(collectedNumber);
   List<String> selectedAvatar = getRandomAvatar(avatars, collectedNumber);

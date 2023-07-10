@@ -111,7 +111,7 @@ class _PostEditPageState extends State<PostEditPage> {
                 max: 100,
                 value: collectedNumber,
               );
-              if (result != null) return;
+              //if (result != null) return;
               collectedNumber = result;
               setState(() {});
             },
