@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker_web/image_picker_web.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'index.dart';
 
@@ -18,11 +18,12 @@ class DuPicker {
     RequestType requestType = RequestType.image,
   }) async {
     List<Uint8List>? result = [];
-    // 如果是Web，使用List<Uint8List>? bytesFromPicker = await ImagePickerWeb.getMultiImagesAsBytes();
+    // 如果是Web
     if (kIsWeb) {
-      List<Uint8List>? bytesFromPicker =
-          await ImagePickerWeb.getMultiImagesAsBytes();
-      if (bytesFromPicker == null) return [];
+      List<XFile>? filesFromPicker = await ImagePicker().pickMultiImage();
+      List<Uint8List> bytesFromPicker =
+          await Future.wait(filesFromPicker.map((e) => e.readAsBytes()));
+
       result = bytesFromPicker;
     } else if (Platform.isAndroid || Platform.isIOS || Platform.isMacOS) {
       // 如果是移动端，使用List<AssetEntity>? result = await AssetPicker.pickAssets(context);
