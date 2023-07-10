@@ -95,39 +95,68 @@ class _PostEditPageState extends State<PostEditPage> {
             leading: const Icon(CupertinoIcons.hand_thumbsup),
             title: const Text("目标赞数"),
             // 向右的箭头
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              showDialog(
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // 显示目标赞数
+                Text(collectedNumber.toString()),
+                const Icon(Icons.chevron_right),
+              ],
+            ),
+            onTap: () async {
+              await showDialog(
                 context: context,
                 builder: (BuildContext context) {
+                  int tempCollectedNumber = collectedNumber;
                   return AlertDialog(
                     title: const Text("目标赞数"),
-                    content: TextField(
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        setState(() {
-                          collectedNumber = int.tryParse(value) ?? 0;
-                        });
-                      },
+                    content:
+                        // 使用CupertinoPicker.builder
+                        ConstrainedBox(
+                      constraints: const BoxConstraints(maxHeight: 200),
+                      child: CupertinoPicker.builder(
+                        // 设置滚动个数
+                        itemExtent: 40,
+                        // 设置选中项
+                        //initialItemCount: 10,
+                        // 不允许负数出现
+                        scrollController: FixedExtentScrollController(
+                            initialItem: tempCollectedNumber),
+                        // 设置选中项
+                        onSelectedItemChanged: (int index) {
+                          tempCollectedNumber = index;
+                        },
+                        // 设置子项构造器
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index < 0) return null;
+                          return Center(
+                            child: Text(
+                              index.toString(),
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     actions: <Widget>[
                       TextButton(
-                        child: const Text("确定"),
+                        child: const Text("取消"),
                         onPressed: () {
-                          Navigator.of(context).pop(); // 关闭对话框
-                          // 在这里可以使用收集到的整数 collectedNumber
+                          Navigator.of(context).maybePop();
                         },
                       ),
                       TextButton(
-                        child: const Text("返回"),
+                        child: const Text("确定"),
                         onPressed: () {
-                          Navigator.of(context).pop(); // 关闭对话框
+                          collectedNumber = tempCollectedNumber;
+                          Navigator.of(context).maybePop();
                         },
                       ),
                     ],
                   );
                 },
               );
+              setState(() {});
             },
           ),
           const DividerWidget(),
