@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wechat/main.dart';
+import 'package:wechat/models/favorates.dart';
 import 'package:wechat/models/moment.dart';
 import 'package:wechat/pages/index.dart';
 import 'package:wechat/pages/post.dart';
@@ -313,9 +314,14 @@ class _MomentsPageState extends State<MomentsPage> {
                       saveData();
                     },
                     onLike: (moment) {
-                      setState(() {});
-                      // 保存
-                      saveData();
+                      DuPicker.selectNumber(context,
+                              title: '目标赞数', min: 0, max: 400, value: 0)
+                          .then((value) {
+                        moment.favorates = Favorates(value).getList();
+                        setState(() {});
+                        // 保存
+                        saveData();
+                      });
                     },
                     onDetail: (moment) {
                       Navigator.of(context)

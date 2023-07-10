@@ -66,15 +66,15 @@ class DuPicker {
     );
   }
 
-  static selectNumber(BuildContext context,
+  static Future<int> selectNumber(BuildContext context,
       {required String title,
       required int min,
       required int max,
-      required int value}) {
-    return showDialog(
+      required int value}) async {
+    int tempCollectedNumber = value;
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
-        int tempCollectedNumber = value;
         return AlertDialog(
           title: const Text("目标赞数"),
           content:
@@ -110,6 +110,7 @@ class DuPicker {
               child: const Text("取消"),
               onPressed: () {
                 Navigator.of(context).maybePop();
+                tempCollectedNumber = value;
               },
             ),
             TextButton(
@@ -122,5 +123,6 @@ class DuPicker {
         );
       },
     );
+    return tempCollectedNumber;
   }
 }

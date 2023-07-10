@@ -92,7 +92,7 @@ class _PostEditPageState extends State<PostEditPage> {
           const DividerWidget(),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),
-            leading: const Icon(CupertinoIcons.hand_thumbsup),
+            leading: const Icon(Icons.thumb_up_outlined),
             title: const Text("目标赞数"),
             // 向右的箭头
             trailing: Row(
