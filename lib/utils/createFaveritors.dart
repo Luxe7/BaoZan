@@ -14,7 +14,7 @@ Minty！
 涟子天一'''
 ];
 
-List<String> _createFavorates({required collectedNumber}) {
+List<String> createFavorates(collectedNumber) {
   List<String> selectedNicknames =
       getRandomNicknames(nicknames, collectedNumber);
   return selectedNicknames;

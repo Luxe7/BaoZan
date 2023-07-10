@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wechat/models/user.dart';
-import 'package:wechat/utils/Picker.dart';
+import 'package:wechat/models/favorates.dart';
 import 'package:wechat/utils/config.dart';
 import 'package:wechat/widgets/index.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -22,6 +22,7 @@ class PostEditPage extends StatefulWidget {
 class _PostEditPageState extends State<PostEditPage> {
   //已选中图片列表
   List<AssetEntity> _selectedAssets = [];
+  int collectedNumber = 0;
 
   //内容输入控制器
   final TextEditingController _contentController = TextEditingController();
@@ -103,7 +104,7 @@ class _PostEditPageState extends State<PostEditPage> {
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
                         setState(() {
-                          final collectedNumber = int.tryParse(value);
+                          collectedNumber = int.tryParse(value) ?? 0;
                         });
                       },
                     ),
@@ -442,16 +443,15 @@ class _PostEditPageState extends State<PostEditPage> {
                   Navigator.maybePop(
                       context,
                       Moment(
-                        id: '1',
-                        content: _contentController.text,
-                        pictures: pictures,
-                        user: User(
                           id: '1',
-                          avatar: 'https://picsum.photos/250?image=9',
-                          name: '张三',
-                        ),
-                        favorates: _createFavorates(collectedNumber),
-                      ));
+                          content: _contentController.text,
+                          pictures: pictures,
+                          user: User(
+                            id: '1',
+                            avatar: 'https://picsum.photos/250?image=9',
+                            name: '张三',
+                          ),
+                          favorates: Favorates(collectedNumber)));
                 },
                 child: const Text(
                   "发表",
