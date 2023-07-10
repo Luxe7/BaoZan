@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:wechat/models/user.dart';
+
 List<String> nicknames = [
   '''阿汐汐汐汐
 百合
@@ -14,9 +16,10 @@ Minty！
 涟子天一'''
 ];
 
-List<String> _createFavorates({required collectedNumber}) {
-  List<String> selectedNicknames =
-      getRandomNicknames(nicknames, collectedNumber);
+List<User> createFavorates({required collectedNumber}) {
+  List<User> selectedNicknames = getRandomNicknames(nicknames, collectedNumber)
+      .map((e) => User(name: e))
+      .toList();
   return selectedNicknames;
 }
 

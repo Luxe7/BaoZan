@@ -4,13 +4,13 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wechat/models/user.dart';
-import 'package:wechat/utils/Picker.dart';
-import 'package:wechat/utils/config.dart';
 import 'package:wechat/widgets/index.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat/utils/index.dart';
 
 import '../models/moment.dart';
+
+int collectedNumber = 0;
 
 class PostEditPage extends StatefulWidget {
   const PostEditPage({Key? key, this.selectedAssets}) : super(key: key);
@@ -89,7 +89,7 @@ class _PostEditPageState extends State<PostEditPage> {
           const DividerWidget(),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),
-            leading: const Icon(CupertinoIcons.at),
+            leading: const Icon(CupertinoIcons.hand_thumbsup),
             title: const Text("目标赞数"),
             // 向右的箭头
             trailing: const Icon(Icons.chevron_right),
@@ -103,20 +103,20 @@ class _PostEditPageState extends State<PostEditPage> {
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
                         setState(() {
-                          final collectedNumber = int.tryParse(value);
+                          collectedNumber = int.parse(value);
                         });
                       },
                     ),
                     actions: <Widget>[
                       TextButton(
-                        child: Text("确定"),
+                        child: const Text("确定"),
                         onPressed: () {
                           Navigator.of(context).pop(); // 关闭对话框
                           // 在这里可以使用收集到的整数 collectedNumber
                         },
                       ),
                       TextButton(
-                        child: Text("返回"),
+                        child: const Text("返回"),
                         onPressed: () {
                           Navigator.of(context).pop(); // 关闭对话框
                         },
@@ -450,7 +450,8 @@ class _PostEditPageState extends State<PostEditPage> {
                           avatar: 'https://picsum.photos/250?image=9',
                           name: '张三',
                         ),
-                        favorates: _createFavorates(collectedNumber),
+                        favorates:
+                            createFavorates(collectedNumber: collectedNumber),
                       ));
                 },
                 child: const Text(
