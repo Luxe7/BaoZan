@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wechat/models/user.dart';
 import 'package:wechat/models/favorates.dart';
 import 'package:wechat/utils/config.dart';
@@ -16,14 +17,14 @@ int collectedNumber = 0;
 
 class PostEditPage extends StatefulWidget {
   const PostEditPage({Key? key, this.selectedAssets}) : super(key: key);
-  final List<AssetEntity>? selectedAssets;
+  final List<Uint8List>? selectedAssets;
   @override
   State<PostEditPage> createState() => _PostEditPageState();
 }
 
 class _PostEditPageState extends State<PostEditPage> {
   //已选中图片列表
-  List<AssetEntity> _selectedAssets = [];
+  List<Uint8List> _selectedAssets = [];
   int collectedNumber = 0;
 
   //内容输入控制器
@@ -247,8 +248,17 @@ class _PostEditPageState extends State<PostEditPage> {
   }
 
 //图片项
-  Widget _buildPhotoitem(AssetEntity asset, double width) {
-    return Draggable<AssetEntity>(
+  Widget _buildPhotoitem(Uint8List asset, double width) {
+    // 随机生成一个ID
+    final String id = const Uuid().v1();
+    final imageWidget = Image.memory(
+      asset,
+      width: width,
+      height: width,
+      fit: BoxFit.cover,
+      // isOriginal: false,
+    );
+    return Draggable<Uint8List>(
       //此可拖动对象将拖放的数据
       data: asset,
 
@@ -276,57 +286,44 @@ class _PostEditPageState extends State<PostEditPage> {
       //拖动进行时显示在指针下方的小部件
       feedback: Container(
         clipBehavior: Clip.antiAlias,
-        padding: (_isWillOrder && _targetAssetId == asset.id)
+        padding: (_isWillOrder && _targetAssetId == id)
             ? EdgeInsets.zero
             : const EdgeInsets.all(imagePadding),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(3),
-          border: (_isWillOrder && _targetAssetId == asset.id)
+          border: (_isWillOrder && _targetAssetId == id)
               ? Border.all(
                   color: accentColor,
                   width: imagePadding,
                 )
               : null,
         ),
-        child: AssetEntityImage(
+        child: Image.memory(
           asset,
           width: width,
           height: width,
           fit: BoxFit.cover,
-          isOriginal: false,
+          // isOriginal: false,
         ),
       ),
       childWhenDragging: Container(
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
-        child: AssetEntityImage(
-          asset,
-          width: width,
-          height: width,
-          fit: BoxFit.cover,
-          isOriginal: false,
-          opacity: const AlwaysStoppedAnimation(0.2),
-        ),
+        child: imageWidget,
       ),
       //子组件
-      child: DragTarget<AssetEntity>(
+      child: DragTarget<Uint8List>(
         builder: (context, candidateData, rejectedData) {
           return Container(
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
-            child: AssetEntityImage(
-              asset,
-              width: width,
-              height: width,
-              fit: BoxFit.cover,
-              isOriginal: false,
-            ),
+            child: imageWidget,
           );
         },
         onWillAccept: (data) {
           setState(() {
             _isWillOrder = true;
-            _targetAssetId = asset.id;
+            _targetAssetId = id;
           });
           return true;
         },
@@ -457,13 +454,7 @@ class _PostEditPageState extends State<PostEditPage> {
                 onPressed: () async {
                   List<String> pictures = [];
                   // 图片转换为base64
-                  for (AssetEntity asset in _selectedAssets) {
-                    Uint8List? byteData =
-                        await (await asset.file)?.readAsBytes();
-                    // 图片为空
-                    if (byteData == null) {
-                      continue;
-                    }
+                  for (Uint8List byteData in _selectedAssets) {
                     List<int> imageData = byteData.buffer.asUint8List();
                     String base64Image =
                         'data:image/png;base64,${base64Encode(imageData)}';

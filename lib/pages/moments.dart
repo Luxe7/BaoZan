@@ -181,7 +181,7 @@ class _MomentsPageState extends State<MomentsPage> {
                           );
                         case 'images':
                           //把数据压入发布界面
-                          List<AssetEntity> selectedAssets = [];
+                          List<Uint8List> selectedAssets = [];
                           DuPicker.assets(
                                   context: context,
                                   requestType: RequestType.image,

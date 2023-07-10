@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     // 全局使用BouncingScrollPhysics的方法是，将ScrollConfiguration包裹在MaterialApp外面，然后设置BouncingScrollPhysics
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: '朋友圈模拟器',
+      title: '爆赞',
       theme: ThemeData(
         pageTransitionsTheme: const PageTransitionsTheme(builders: {
           TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
