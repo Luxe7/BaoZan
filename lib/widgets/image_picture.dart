@@ -64,9 +64,7 @@ class ImagePicture extends StatelessWidget {
       );
     }
     late ImageProvider imageProvider;
-    if (url!.contains('images/')) {
-      imageProvider = AssetImage(url!);
-    } else if (url!.contains('http')) {
+    if (url!.contains('http')) {
       return ExtendedImage.network(
         url ?? '',
         width: width,
@@ -74,6 +72,8 @@ class ImagePicture extends StatelessWidget {
         fit: fit,
         cache: true,
       );
+    } else {
+      imageProvider = AssetImage(url!);
     }
     return Image(
       image: imageProvider,

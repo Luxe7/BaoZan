@@ -5,7 +5,7 @@ import 'dart:typed_data';
 
 List<String> avatars = [];
 
-String folderPath = 'Avatar';
+String folderPath = 'images/avatar';
 
 void count(collectedNumber) async {
   for (int i = 1; i <= collectedNumber; i++) {
