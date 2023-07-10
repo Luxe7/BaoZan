@@ -29,7 +29,7 @@ class Moment {
     id = json?['id'];
 
     content = json?['content'];
-    pictures = json?['pictures'].cast<String>();
+    pictures = json?['pictures']?.cast<String>() ?? [];
     user = json?['user'] != null ? User.fromJson(json?['user']) : null;
     if (json?['favorates'] != null) {
       favorates = <User>[];

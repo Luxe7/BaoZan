@@ -12,6 +12,8 @@ import 'package:wechat/utils/index.dart';
 
 import '../models/moment.dart';
 
+int collectedNumber = 0;
+
 class PostEditPage extends StatefulWidget {
   const PostEditPage({Key? key, this.selectedAssets}) : super(key: key);
   final List<AssetEntity>? selectedAssets;
@@ -90,7 +92,7 @@ class _PostEditPageState extends State<PostEditPage> {
           const DividerWidget(),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),
-            leading: const Icon(CupertinoIcons.at),
+            leading: const Icon(CupertinoIcons.hand_thumbsup),
             title: const Text("目标赞数"),
             // 向右的箭头
             trailing: const Icon(Icons.chevron_right),
@@ -110,14 +112,14 @@ class _PostEditPageState extends State<PostEditPage> {
                     ),
                     actions: <Widget>[
                       TextButton(
-                        child: Text("确定"),
+                        child: const Text("确定"),
                         onPressed: () {
                           Navigator.of(context).pop(); // 关闭对话框
                           // 在这里可以使用收集到的整数 collectedNumber
                         },
                       ),
                       TextButton(
-                        child: Text("返回"),
+                        child: const Text("返回"),
                         onPressed: () {
                           Navigator.of(context).pop(); // 关闭对话框
                         },
@@ -425,7 +427,6 @@ class _PostEditPageState extends State<PostEditPage> {
               child: FilledButton(
                 onPressed: () async {
                   List<String> pictures = [];
-                  List<User>? favorates = [];
                   // 图片转换为base64
                   for (AssetEntity asset in _selectedAssets) {
                     Uint8List? byteData =
@@ -440,6 +441,7 @@ class _PostEditPageState extends State<PostEditPage> {
                     pictures.add(base64Image);
                   }
                   // ignore: use_build_context_synchronously
+                  var tempFavorates = Favorates(collectedNumber);
                   Navigator.maybePop(
                       context,
                       Moment(
@@ -451,7 +453,7 @@ class _PostEditPageState extends State<PostEditPage> {
                             avatar: 'https://picsum.photos/250?image=9',
                             name: '张三',
                           ),
-                          favorates: Favorates(collectedNumber)));
+                          favorates: tempFavorates.getList()));
                 },
                 child: const Text(
                   "发表",

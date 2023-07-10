@@ -191,7 +191,7 @@ class _MomentsPageState extends State<MomentsPage> {
                             if (mounted) {
                               Navigator.of(context)
                                   .push(CupertinoPageRoute(builder: ((context) {
-                                return PostEditPage(selectedAssets: value);
+                                return PostEditPage(selectedAssets: assets);
                               }))).then((value) {
                                 moments.add(value);
                                 setState(() {});
