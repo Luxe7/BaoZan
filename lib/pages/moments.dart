@@ -9,7 +9,6 @@ import 'package:wechat/pages/post.dart';
 import 'package:wechat/utils/index.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
-import '../utils/bottom_sheet.dart';
 import '../utils/essay_analyser.dart';
 import '../widgets/image_picture.dart';
 import '../widgets/moment.dart';

@@ -274,47 +274,90 @@ class MomentWidget extends StatelessWidget {
                                       : const Color(0xff808fa5),
                                   fontSize: 14,
                                 ),
-                                child: Wrap(
-                                  children: moment.favorates?.map((e) {
-                                        return Row(
-                                          mainAxisSize: MainAxisSize.min,
+                                child: isDetail
+                                    ?
+                                    // 使用头像网格，每个头像32，间隔为4，外面套一层Row，左边是爱心右边是头像
+                                    Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 4.0),
+                                            child: Icon(
+                                              CupertinoIcons.heart,
+                                              color: Theme.of(context)
+                                                          .brightness ==
+                                                      Brightness.light
+                                                  ? const Color(0xff596b91)
+                                                  : const Color(0xff808fa5),
+                                              size: 16,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Expanded(
+                                            child: Wrap(
+                                              spacing: 4,
+                                              runSpacing: 4,
+                                              children: moment.favorates!
+                                                  .map(
+                                                    (e) => ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4),
+                                                      child: ImagePicture(
+                                                        url: e.avatar,
+                                                        width: 32,
+                                                        height: 32,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .toList(),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Text.rich(
+                                        // 优化性能，爱心要嵌入到Text中
+                                        TextSpan(
                                           children: [
-                                            if (moment.favorates?.indexOf(e) ==
-                                                0) ...[
-                                              Icon(
+                                            WidgetSpan(
+                                              child: Icon(
                                                 CupertinoIcons.heart,
-                                                size: 14,
+                                                size: 16,
                                                 color: Theme.of(context)
                                                             .brightness ==
                                                         Brightness.light
                                                     ? const Color(0xff596b91)
                                                     : const Color(0xff808fa5),
                                               ),
-                                              const SizedBox(width: 5),
-                                            ],
-                                            Text(
-                                              (e.name ?? '') +
-                                                  ((moment.favorates
-                                                              ?.indexOf(e) !=
-                                                          (moment.favorates
-                                                                      ?.length ??
-                                                                  0) -
-                                                              1)
-                                                      ? '，'
-                                                      : ''),
-                                              // 粗体
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
                                             ),
+                                            ...moment.favorates?.map((e) {
+                                                  return TextSpan(
+                                                    text: (e.name ?? '') +
+                                                        ((moment.favorates
+                                                                    ?.indexOf(
+                                                                        e) !=
+                                                                (moment.favorates
+                                                                            ?.length ??
+                                                                        0) -
+                                                                    1)
+                                                            ? '，'
+                                                            : ''),
+                                                    // 粗体
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  );
+                                                }).toList() ??
+                                                [],
                                           ],
-                                        );
-                                      }).toList() ??
-                                      [],
-                                ),
+                                        ),
+                                      ),
                               ),
                             ),
                           ],
+                          // 评论列表
                           if (moment.comments?.isNotEmpty ?? false) ...[
                             // 线条
                             Container(
