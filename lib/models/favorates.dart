@@ -4,14 +4,16 @@ import 'package:wechat/utils/index.dart';
 class Favorates {
   List<User> users = [];
   List<String> selectedNicknames = [];
+  List<String> selectedAvatar = [];
 
   Favorates(collectedNumber) {
-    selectedNicknames = createFavorates(collectedNumber);
+    selectedNicknames = createNicknames(collectedNumber);
+    selectedAvatar = createAvatar(collectedNumber);
 
     for (var i = 0; i < collectedNumber; i++) {
       var temp = User(
         id: i.toString(),
-        avatar: 'https://picsum.photos/250?image=9',
+        avatar: selectedAvatar[i],
         name: selectedNicknames[i],
       );
       users.add(temp);
