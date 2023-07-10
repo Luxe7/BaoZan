@@ -2,7 +2,7 @@ import 'package:wechat/models/user.dart';
 import 'package:wechat/utils/index.dart';
 
 class Favorates {
-  List<User>? Users = [];
+  List<User> users = [];
   List<String> selectedNicknames = [];
 
   Favorates(collectedNumber) {
@@ -14,10 +14,10 @@ class Favorates {
         avatar: 'https://picsum.photos/250?image=9',
         name: selectedNicknames[i],
       );
-      Users?.add(temp);
+      users.add(temp);
     }
   }
-  List<User>? getList() {
-    return Users;
+  List<User> getList() {
+    return users;
   }
 }
