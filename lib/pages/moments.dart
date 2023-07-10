@@ -124,9 +124,8 @@ class _MomentsPageState extends State<MomentsPage> {
               ),
               // 右边照相
               actions: [
-                IconButton(
-                  color: isLightForeground ? Colors.white : Colors.black,
-                  onPressed: (() {
+                InkResponse(
+                  onTap: (() {
                     // 弹出底部菜单
                     DuPicker.showModalSheet(
                       context,
@@ -192,6 +191,10 @@ class _MomentsPageState extends State<MomentsPage> {
                                   .push(CupertinoPageRoute(builder: ((context) {
                                 return PostEditPage(selectedAssets: assets);
                               }))).then((value) {
+                                if (value == null) {
+                                  // 取消
+                                  return;
+                                }
                                 moments.add(value);
                                 setState(() {});
 
@@ -203,8 +206,30 @@ class _MomentsPageState extends State<MomentsPage> {
                       }
                     });
                   }),
-                  icon: Icon(
-                      isTop ? Icons.camera_alt : Icons.camera_alt_outlined),
+                  onLongPress: () {
+                    // 长按进入纯文本（微信本来就是这样）
+                    Navigator.of(context)
+                        .push(CupertinoPageRoute(builder: ((context) {
+                      return const PostEditPage(selectedAssets: []);
+                    }))).then((value) {
+                      if (value == null) {
+                        // 取消
+                        return;
+                      }
+                      moments.add(value);
+                      setState(() {});
+
+                      // 保存
+                      saveData();
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Icon(
+                      isTop ? Icons.camera_alt : Icons.camera_alt_outlined,
+                      color: isLightForeground ? Colors.white : Colors.black,
+                    ),
+                  ),
                 ),
               ],
               // 伸缩的高度

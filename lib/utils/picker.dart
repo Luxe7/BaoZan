@@ -26,8 +26,9 @@ class DuPicker {
     );
 
     // 通过(await e.file)?.readAsBytes()转换为List<Unit8List>
+    if (assets == null) return [];
     List<Uint8List>? result = (await Future.wait(
-      assets!.map((e) async {
+      assets.map((e) async {
         return (await e.file)?.readAsBytes();
       }),
     ))
