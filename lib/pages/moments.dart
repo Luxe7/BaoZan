@@ -129,11 +129,16 @@ class _MomentsPageState extends State<MomentsPage> {
               // 顶部标题
               title: Text(
                 isTop ? '' : '朋友圈',
-                style: TextStyle(
-                    fontSize: 18,
-                    color: isLightForeground ? Colors.white : Colors.black,
-                    // 加粗
-                    fontWeight: FontWeight.bold),
+                style: Platform.isAndroid
+                    ? TextStyle(
+                        fontSize: 17,
+                        color: isLightForeground ? Colors.white : Colors.black,
+                      )
+                    : TextStyle(
+                        fontSize: 18,
+                        color: isLightForeground ? Colors.white : Colors.black,
+                        // 加粗
+                        fontWeight: FontWeight.bold),
               ),
               centerTitle: true,
               // 左边返回
@@ -244,10 +249,11 @@ class _MomentsPageState extends State<MomentsPage> {
                     });
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.only(left: 24, right: 14.0),
                     child: Icon(
                       isTop ? Icons.camera_alt : Icons.camera_alt_outlined,
                       color: isLightForeground ? Colors.white : Colors.black,
+                      size: 24,
                     ),
                   ),
                 ),
