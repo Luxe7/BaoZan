@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wechat/utils/index.dart';
 
 import '../models/moment.dart';
+import 'avatar_widget.dart';
 import 'image_picture.dart';
 
 class MomentWidget extends StatelessWidget {
@@ -222,29 +223,40 @@ class MomentWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // 头像
-              ClipRRect(
-                borderRadius: BorderRadius.circular(3),
-                child: ImagePicture(
-                  url: moment.user?.avatar ?? '',
-                  width: 40,
-                  height: 40,
-                  fit: BoxFit.cover,
-                ),
+              AvatarWidget(
+                user: moment.user,
+                size: 40,
+                radius: 3,
               ),
+              // ClipRRect(
+              //   borderRadius: BorderRadius.circular(3),
+              //   child: ImagePicture(
+              //     url: moment.user?.avatar ?? '',
+              //     width: 40,
+              //     height: 40,
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
               const SizedBox(width: 10),
               // 名称
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      moment.user?.name ?? '',
-                      style: TextStyle(
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? const Color(0xff596b91)
-                            : const Color(0xff808fa5),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    InkWell(
+                      onTap: () {
+                        // 修改名字
+                      },
+                      child: Text(
+                        moment.user?.name ?? '',
+                        style: TextStyle(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? const Color(0xff596b91)
+                                  : const Color(0xff808fa5),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     // 判断moment.content是否为空字符串
