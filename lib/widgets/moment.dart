@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wechat/utils/index.dart';
+import 'package:wechat/pages/index.dart';
 
 import '../models/moment.dart';
 import 'avatar_widget.dart';
 import 'image_picture.dart';
 
-class MomentWidget extends StatelessWidget {
+class MomentWidget extends StatefulWidget {
   const MomentWidget(
       {super.key,
       required this.moment,
@@ -28,12 +28,17 @@ class MomentWidget extends StatelessWidget {
   final bool isDetail;
 
   @override
+  State<MomentWidget> createState() => _MomentWidgetState();
+}
+
+class _MomentWidgetState extends State<MomentWidget> {
+  @override
   Widget build(BuildContext context) {
     var actionMap = {
-      '点赞': onLike,
-      '评论': onComment,
-      '详情': onDetail,
-      '删除': onDelete,
+      '点赞': widget.onLike,
+      '评论': widget.onComment,
+      '详情': widget.onDetail,
+      '删除': widget.onDelete,
     };
 
     var container = [
@@ -49,7 +54,7 @@ class MomentWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (moment.favorates?.isNotEmpty ?? false) ...[
+            if (widget.moment.favorates?.isNotEmpty ?? false) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
@@ -62,7 +67,7 @@ class MomentWidget extends StatelessWidget {
                         : const Color(0xff808fa5),
                     fontSize: 14,
                   ),
-                  child: isDetail
+                  child: widget.isDetail
                       ?
                       // 使用头像网格，每个头像32，间隔为4，外面套一层Row，左边是爱心右边是头像
                       Row(
@@ -85,7 +90,7 @@ class MomentWidget extends StatelessWidget {
                               child: Wrap(
                                 spacing: 4,
                                 runSpacing: 4,
-                                children: moment.favorates!
+                                children: widget.moment.favorates!
                                     .map(
                                       (e) => ClipRRect(
                                         borderRadius: BorderRadius.circular(4),
@@ -116,11 +121,13 @@ class MomentWidget extends StatelessWidget {
                                       : const Color(0xff808fa5),
                                 ),
                               ),
-                              ...moment.favorates?.map((e) {
+                              ...widget.moment.favorates?.map((e) {
                                     return TextSpan(
                                       text: (e.name ?? '') +
-                                          ((moment.favorates?.indexOf(e) !=
-                                                  (moment.favorates?.length ??
+                                          ((widget.moment.favorates
+                                                      ?.indexOf(e) !=
+                                                  (widget.moment.favorates
+                                                              ?.length ??
                                                           0) -
                                                       1)
                                               ? '，'
@@ -139,7 +146,7 @@ class MomentWidget extends StatelessWidget {
               ),
             ],
             // 评论列表
-            if (moment.comments?.isNotEmpty ?? false) ...[
+            if (widget.moment.comments?.isNotEmpty ?? false) ...[
               // 线条
               Container(
                 height: 0.5,
@@ -157,7 +164,7 @@ class MomentWidget extends StatelessWidget {
                   vertical: 0,
                 ),
                 child: ListBody(
-                  children: moment.comments?.map((e) {
+                  children: widget.moment.comments?.map((e) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 2),
                           child: Text.rich(
@@ -224,7 +231,7 @@ class MomentWidget extends StatelessWidget {
             children: [
               // 头像
               AvatarWidget(
-                user: moment.user,
+                user: widget.moment.user,
                 size: 40,
                 radius: 3,
               ),
@@ -246,9 +253,44 @@ class MomentWidget extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         // 修改名字
+                        TextEditingController nameController =
+                            TextEditingController();
+                        nameController.text = widget.moment.user?.name ?? '';
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('修改名字'),
+                            content: TextField(
+                              controller: nameController,
+                              decoration: const InputDecoration(
+                                hintText: '请输入新的名字',
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('取消'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  // 修改名字
+                                  setState(() {
+                                    widget.moment.user?.name =
+                                        nameController.text;
+                                    saveData();
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('确定'),
+                              ),
+                            ],
+                          ),
+                        );
                       },
                       child: Text(
-                        moment.user?.name ?? '',
+                        widget.moment.user?.name ?? '',
                         style: TextStyle(
                           color:
                               Theme.of(context).brightness == Brightness.light
@@ -261,16 +303,16 @@ class MomentWidget extends StatelessWidget {
                     ),
                     // 判断moment.content是否为空字符串
                     const SizedBox(height: 5),
-                    if (moment.content?.isNotEmpty ?? false) ...[
+                    if (widget.moment.content?.isNotEmpty ?? false) ...[
                       // 内容
                       Text(
-                        moment.content ?? '',
+                        widget.moment.content ?? '',
                         style: const TextStyle(fontSize: 18),
                       ),
                       const SizedBox(height: 10),
                     ],
                     // 图片
-                    if ((moment.pictures?.length ?? 0) > 1)
+                    if ((widget.moment.pictures?.length ?? 0) > 1)
                       Padding(
                         padding: const EdgeInsets.only(right: 48),
                         child: GridView.builder(
@@ -278,13 +320,13 @@ class MomentWidget extends StatelessWidget {
                           // 不允许滑动
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) => ImagePicture(
-                            url: moment.pictures![index],
+                            url: widget.moment.pictures![index],
                             fit: BoxFit.cover,
                           ),
-                          itemCount: moment.pictures?.length ?? 0,
+                          itemCount: widget.moment.pictures?.length ?? 0,
                           gridDelegate: () {
                             // 2列
-                            switch (moment.pictures?.length ?? 0) {
+                            switch (widget.moment.pictures?.length ?? 0) {
                               case 2:
                               case 4:
                                 return const SliverGridDelegateWithFixedCrossAxisCount(
@@ -303,15 +345,15 @@ class MomentWidget extends StatelessWidget {
                           shrinkWrap: true,
                         ),
                       ),
-                    if ((moment.pictures?.length ?? 0) == 1)
+                    if ((widget.moment.pictures?.length ?? 0) == 1)
                       Padding(
                         padding: const EdgeInsets.only(right: 48),
                         child: ImagePicture(
-                          url: moment.pictures![0],
+                          url: widget.moment.pictures![0],
                           fit: BoxFit.cover,
                         ),
                       ),
-                    if (moment.essay != null)
+                    if (widget.moment.essay != null)
                       Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
@@ -325,7 +367,7 @@ class MomentWidget extends StatelessWidget {
                           children: [
                             // 图片
                             ImagePicture(
-                              url: moment.essay?.cover ?? '',
+                              url: widget.moment.essay?.cover ?? '',
                               width: 48,
                               height: 48,
                               fit: BoxFit.cover,
@@ -333,7 +375,7 @@ class MomentWidget extends StatelessWidget {
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                moment.essay?.title ?? '',
+                                widget.moment.essay?.title ?? '',
                                 style: const TextStyle(
                                   fontSize: 14,
                                 ),
@@ -363,7 +405,7 @@ class MomentWidget extends StatelessWidget {
                         // 菜单从左侧弹出，底色为#4c4c4c
                         PopupMenuButton(
                           onSelected: (value) {
-                            actionMap[value]?.call(moment);
+                            actionMap[value]?.call(widget.moment);
                           },
                           itemBuilder: (context) {
                             // 使用actionMap
@@ -424,13 +466,13 @@ class MomentWidget extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    if (!isDetail) ...container
+                    if (!widget.isDetail) ...container
                   ],
                 ),
               ),
             ],
           ),
-          if (isDetail) ...container
+          if (widget.isDetail) ...container
         ],
       ),
     );
