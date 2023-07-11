@@ -1,7 +1,4 @@
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wechat/pages/index.dart';
 
@@ -374,13 +371,13 @@ class _MomentWidgetState extends State<MomentWidget> {
                               title: "目标时间（分钟）",
                               min: 1,
                               max: 360,
-                              value: collectedTime,
+                              value: widget.moment.time ?? 1,
                             );
-                            collectedTime = result;
+                            widget.moment.time = result;
                             setState(() {});
                           },
                           child: Text(
-                            getTimeString(collectedTime),
+                            getTimeString(widget.moment.time ?? 1),
                             style: TextStyle(
                               color: Theme.of(context).brightness ==
                                       Brightness.light

@@ -452,6 +452,7 @@ class _PostEditPageState extends State<PostEditPage> {
                           content: _contentController.text,
                           pictures: pictures,
                           user: myself,
+                          time: collectedTime,
                           favorates: tempFavorates.getList()));
                 },
                 child: const Text(
