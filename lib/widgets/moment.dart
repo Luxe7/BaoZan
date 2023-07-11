@@ -368,38 +368,29 @@ class _MomentWidgetState extends State<MomentWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        TextButton(
-                            onPressed: () async {
-                              var result = await DuPicker.selectNumber(
-                                context,
-                                title: "目标时间（分钟）",
-                                min: 1,
-                                max: 360,
-                                value: collectedTime,
-                              );
-                              collectedTime = result;
-                              setState(() {});
-                            },
-                            style: ButtonStyle(
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                  Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? const Color(0xffb3b3b3)
-                                      : const Color(0xff5d5d5d),
-                                ),
-                                textStyle: MaterialStateProperty.all(
-                                  const TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                padding: MaterialStateProperty.all<EdgeInsets>(
-                                  const EdgeInsets.all(0),
-                                )),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(getTimeString(collectedTime)),
-                            )),
+                        InkWell(
+                          onTap: () async {
+                            var result = await DuPicker.selectNumber(
+                              context,
+                              title: "目标时间（分钟）",
+                              min: 1,
+                              max: 360,
+                              value: collectedTime,
+                            );
+                            collectedTime = result;
+                            setState(() {});
+                          },
+                          child: Text(
+                            getTimeString(collectedTime),
+                            style: TextStyle(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? const Color(0xffb3b3b3)
+                                  : const Color(0xffffffff),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
 
                         // TextButton(
                         //     onPressed: widget.onDelete?.call(widget.moment),
