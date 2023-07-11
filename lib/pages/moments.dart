@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,9 +7,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wechat/main.dart';
 import 'package:wechat/models/favorates.dart';
 import 'package:wechat/models/moment.dart';
+import 'package:wechat/models/user.dart';
 import 'package:wechat/pages/index.dart';
 import 'package:wechat/pages/post.dart';
 import 'package:wechat/utils/index.dart';
+import 'package:wechat/widgets/avatar_widget.dart';
+import 'package:wechat/widgets/name_widget.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../utils/essay_analyser.dart';
@@ -28,6 +33,10 @@ void readData() {
   final data = prefs?.getStringList('moments');
   if (data != null) {
     moments = Moment.decode(data);
+  }
+  final self = prefs?.getString('myself');
+  if (self != null) {
+    myself = User.fromJson(jsonDecode(self));
   }
 }
 
@@ -252,13 +261,13 @@ class _MomentsPageState extends State<MomentsPage> {
                             color: Theme.of(context).scaffoldBackgroundColor)),
                     // 灰色背景 #222222
                     Positioned(
-                        bottom: 16,
+                        bottom: 20,
                         left: 0,
                         right: 0,
                         top: 0,
                         child: Container(color: const Color(0xff222222))),
                     Positioned(
-                      bottom: 16,
+                      bottom: 20,
                       left: 0,
                       right: 0,
                       child: Image.asset(
@@ -267,15 +276,18 @@ class _MomentsPageState extends State<MomentsPage> {
                       ),
                     ),
                     // 头像左边的名字
-                    const Positioned(
-                      bottom: 32,
-                      right: 92,
-                      child: Text(
-                        '张三',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                    Positioned(
+                      bottom: 30,
+                      right: 88,
+                      child: NameWidget(
+                        user: myself,
+                        child: Text(
+                          myself.name ?? '',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -284,14 +296,10 @@ class _MomentsPageState extends State<MomentsPage> {
                     Positioned(
                       bottom: 0,
                       right: 12,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: const ImagePicture(
-                          url: 'images/avatar.jpg',
-                          fit: BoxFit.contain,
-                          width: 64,
-                          height: 64,
-                        ),
+                      child: AvatarWidget(
+                        user: myself,
+                        size: 64,
+                        radius: 8,
                       ),
                     ),
                   ],

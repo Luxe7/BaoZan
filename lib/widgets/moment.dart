@@ -5,6 +5,7 @@ import 'package:wechat/pages/index.dart';
 import '../models/moment.dart';
 import 'avatar_widget.dart';
 import 'image_picture.dart';
+import 'name_widget.dart';
 
 class MomentWidget extends StatefulWidget {
   const MomentWidget(
@@ -250,57 +251,19 @@ class _MomentWidgetState extends State<MomentWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        // 修改名字
-                        TextEditingController nameController =
-                            TextEditingController();
-                        nameController.text = widget.moment.user?.name ?? '';
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: const Text('修改名字'),
-                            content: TextField(
-                              controller: nameController,
-                              decoration: const InputDecoration(
-                                hintText: '请输入新的名字',
-                              ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('取消'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  // 修改名字
-                                  setState(() {
-                                    widget.moment.user?.name =
-                                        nameController.text;
-                                    saveData();
-                                  });
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('确定'),
-                              ),
-                            ],
+                    NameWidget(
+                        user: widget.moment.user,
+                        child: Text(
+                          widget.moment.user?.name ?? '',
+                          style: TextStyle(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? const Color(0xff596b91)
+                                    : const Color(0xff808fa5),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                      },
-                      child: Text(
-                        widget.moment.user?.name ?? '',
-                        style: TextStyle(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? const Color(0xff596b91)
-                                  : const Color(0xff808fa5),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                        )),
                     // 判断moment.content是否为空字符串
                     const SizedBox(height: 5),
                     if (widget.moment.content?.isNotEmpty ?? false) ...[
