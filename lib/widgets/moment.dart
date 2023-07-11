@@ -381,16 +381,21 @@ class _MomentWidgetState extends State<MomentWidget> {
                               setState(() {});
                             },
                             style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                Theme.of(context).brightness == Brightness.light
-                                    ? const Color(0xffb3b3b3)
-                                    : const Color(0xff5d5d5d),
-                              ),
-                              textStyle:
-                                  MaterialStateProperty.all(const TextStyle(
-                                fontSize: 14,
-                              )),
-                            ),
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? const Color(0xffb3b3b3)
+                                      : const Color(0xff5d5d5d),
+                                ),
+                                textStyle: MaterialStateProperty.all(
+                                  const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                padding: MaterialStateProperty.all<EdgeInsets>(
+                                  const EdgeInsets.all(0),
+                                )),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(getTimeString(collectedTime)),
