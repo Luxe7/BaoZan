@@ -14,6 +14,7 @@ class Moment {
   List<User>? favorates;
   List<Comment>? comments;
   Essay? essay;
+  int? time;
 
   Moment({
     this.id,
@@ -23,6 +24,7 @@ class Moment {
     this.favorates,
     this.comments,
     this.essay,
+    this.time,
   });
 
   Moment.fromJson(Map<String, dynamic>? json) {
@@ -46,6 +48,7 @@ class Moment {
     if (json?['essay'] != null) {
       essay = Essay.fromJson(json?['essay']);
     }
+    time = json?['time'];
   }
 
   Map<String, dynamic> toJson() {
@@ -66,6 +69,7 @@ class Moment {
     if (essay != null) {
       data['essay'] = essay?.toJson();
     }
+    data['time'] = time;
     return data;
   }
 
