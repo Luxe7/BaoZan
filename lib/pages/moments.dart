@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +101,7 @@ class _MomentsPageState extends State<MomentsPage> {
           } else {
             isTop = false;
           }
-          setState(() {});
+          if (mounted) setState(() {});
           return false;
         },
         child: CustomScrollView(
@@ -108,16 +109,16 @@ class _MomentsPageState extends State<MomentsPage> {
           slivers: [
             SliverAppBar(
               toolbarHeight: 48,
-              systemOverlayStyle: isLightForeground
+              systemOverlayStyle: (isLightForeground)
                   ? const SystemUiOverlayStyle(
                       statusBarColor: Colors.transparent,
                       statusBarIconBrightness: Brightness.light,
-                      statusBarBrightness: Brightness.light,
+                      statusBarBrightness: Brightness.dark,
                     )
                   : const SystemUiOverlayStyle(
                       statusBarColor: Colors.transparent,
                       statusBarIconBrightness: Brightness.dark,
-                      statusBarBrightness: Brightness.dark,
+                      statusBarBrightness: Brightness.light,
                     ),
               // 顶部标题
               title: Text(

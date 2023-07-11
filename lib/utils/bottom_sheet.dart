@@ -68,8 +68,11 @@ class Btn extends StatelessWidget {
         // 内容
         Container(
           alignment: Alignment.center,
-          height: 48,
-          child: child,
+          constraints: const BoxConstraints(minHeight: 48),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: child,
+          ),
         ),
         // 波纹
         Positioned.fill(

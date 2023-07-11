@@ -369,6 +369,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                         PopupMenuButton(
                           onSelected: (value) {
                             actionMap[value]?.call(widget.moment);
+                            setState(() {});
                           },
                           itemBuilder: (context) {
                             // 使用actionMap
