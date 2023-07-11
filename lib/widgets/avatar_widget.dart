@@ -94,18 +94,16 @@ class _AvatarWidgetState extends State<AvatarWidget> {
                     onTap: () {
                       Navigator.pop(context);
                       DuPicker.assets(context: context).then((list) {
-                        Uint8List? byteData = list?[0];
-                        if (byteData != null) {
-                          // 转换为base64
-                          List<int> imageData = byteData.buffer.asUint8List();
-                          String base64Image =
-                              'data:image/png;base64,${base64Encode(imageData)}';
+                        if (list == null || list.isEmpty) return;
+                        Uint8List byteData = list[0];
+                        List<int> imageData = byteData.buffer.asUint8List();
+                        String base64Image =
+                            'data:image/png;base64,${base64Encode(imageData)}';
 
-                          // 更新头像
-                          setState(() {
-                            widget.user?.avatar = base64Image;
-                          });
-                        }
+                        // 更新头像
+                        setState(() {
+                          widget.user?.avatar = base64Image;
+                        });
                       });
                     },
                   ),

@@ -273,6 +273,7 @@ class _MomentsPageState extends State<MomentsPage> {
                       bottom: 20,
                       left: 0,
                       right: 0,
+                      top: 0,
                       child: InkWell(
                         onTap: () {
                           DuPicker.assets(context: context).then((list) {

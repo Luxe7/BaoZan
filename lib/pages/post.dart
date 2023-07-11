@@ -385,6 +385,7 @@ class _PostEditPageState extends State<PostEditPage> {
         //左侧取消文字按钮
         leadingWidth: 80,
         leading: CupertinoButton(
+          padding: EdgeInsets.zero,
           onPressed: () {
             Navigator.pop(context);
           },
