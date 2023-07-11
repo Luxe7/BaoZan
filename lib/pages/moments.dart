@@ -368,7 +368,9 @@ class _MomentsPageState extends State<MomentsPage> {
                     moment: moment,
                     onDelete: (moment) {
                       moments.remove(moment);
-                      setState(() {});
+                      if (mounted) {
+                        setState(() {});
+                      }
                       // 保存
                       saveData();
                     },

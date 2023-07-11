@@ -44,10 +44,6 @@ class _MomentWidgetState extends State<MomentWidget> {
       '详情': widget.onDetail,
       '删除': widget.onDelete,
     };
-    void myFunction() {
-      // 按钮被点击时执行的代码
-      widget.onDelete?.call(widget.moment);
-    }
 
     var container = [
       // 点赞列表
