@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wechat/models/moment.dart';
 import 'package:wechat/widgets/moment.dart';
@@ -14,10 +15,21 @@ class _MomentDetailPageState extends State<MomentDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          padding: const EdgeInsets.only(left: 8, right: 24),
+          onPressed: () {},
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white
+              : Colors.black,
+          icon: const Icon(
+            CupertinoIcons.back,
+            size: 24,
+          ),
+        ),
         title: const Text(
           '详情',
           // 加粗
-          style: TextStyle(fontWeight: FontWeight.bold),
+          // style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
