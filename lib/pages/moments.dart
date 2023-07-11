@@ -143,9 +143,13 @@ class _MomentsPageState extends State<MomentsPage> {
               centerTitle: true,
               // 左边返回
               leading: IconButton(
+                padding: const EdgeInsets.only(left: 0, right: 24),
                 onPressed: () {},
                 color: isLightForeground ? Colors.white : Colors.black,
-                icon: const Icon(CupertinoIcons.back),
+                icon: const Icon(
+                  CupertinoIcons.back,
+                  size: 24,
+                ),
               ),
               // 右边照相
               actions: [
