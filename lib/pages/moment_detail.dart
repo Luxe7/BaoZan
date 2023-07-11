@@ -17,7 +17,9 @@ class _MomentDetailPageState extends State<MomentDetailPage> {
       appBar: AppBar(
         leading: IconButton(
           padding: const EdgeInsets.only(left: 8, right: 24),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.maybePop(context);
+          },
           color: Theme.of(context).brightness == Brightness.dark
               ? Colors.white
               : Colors.black,
