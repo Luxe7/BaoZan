@@ -391,9 +391,37 @@ class _MomentWidgetState extends State<MomentWidget> {
                           ),
                         ),
 
-                        TextButton(
-                            onPressed: () =>
-                                widget.onDelete?.call(widget.moment),
+                        InkResponse(
+                          onTap: () {
+                            // 确认删除弹窗
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text("确认删除？"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("取消"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      // 删除
+                                      widget.onDelete?.call(widget.moment);
+                                    },
+                                    child: const Text("确认"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
                             child: Icon(
                               CupertinoIcons.delete_solid,
                               size: 15,
@@ -401,7 +429,9 @@ class _MomentWidgetState extends State<MomentWidget> {
                                       Brightness.light
                                   ? const Color(0xff596b91)
                                   : const Color(0xff808fa5),
-                            )),
+                            ),
+                          ),
+                        ),
 
                         // 赞和评论的菜单按钮
                         // 菜单从左侧弹出，底色为#4c4c4c
