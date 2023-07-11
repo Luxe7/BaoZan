@@ -325,6 +325,7 @@ class _MomentsPageState extends State<MomentsPage> {
                       right: 88,
                       child: NameWidget(
                         user: myself,
+                        onChange: (p0) => setState(() {}),
                         child: Text(
                           myself.name ?? '',
                           style: const TextStyle(
