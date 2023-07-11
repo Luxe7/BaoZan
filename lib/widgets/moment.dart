@@ -35,6 +35,170 @@ class MomentWidget extends StatelessWidget {
       '删除': onDelete,
     };
 
+    var container = [
+      // 点赞列表
+      Container(
+        alignment: Alignment.topLeft,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Theme.of(context).brightness == Brightness.light
+              ? const Color(0xfff7f7f7)
+              : const Color(0xff202020),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (moment.favorates?.isNotEmpty ?? false) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? const Color(0xff596b91)
+                        : const Color(0xff808fa5),
+                    fontSize: 14,
+                  ),
+                  child: isDetail
+                      ?
+                      // 使用头像网格，每个头像32，间隔为4，外面套一层Row，左边是爱心右边是头像
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 6, right: 4.0),
+                              child: Icon(
+                                CupertinoIcons.heart,
+                                color: Theme.of(context).brightness ==
+                                        Brightness.light
+                                    ? const Color(0xff596b91)
+                                    : const Color(0xff808fa5),
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Wrap(
+                                spacing: 4,
+                                runSpacing: 4,
+                                children: moment.favorates!
+                                    .map(
+                                      (e) => ClipRRect(
+                                        borderRadius: BorderRadius.circular(4),
+                                        child: ImagePicture(
+                                          url: e.avatar,
+                                          width: 32,
+                                          height: 32,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Text.rich(
+                          // 优化性能，爱心要嵌入到Text中
+                          TextSpan(
+                            children: [
+                              WidgetSpan(
+                                child: Icon(
+                                  CupertinoIcons.heart,
+                                  size: 16,
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? const Color(0xff596b91)
+                                      : const Color(0xff808fa5),
+                                ),
+                              ),
+                              ...moment.favorates?.map((e) {
+                                    return TextSpan(
+                                      text: (e.name ?? '') +
+                                          ((moment.favorates?.indexOf(e) !=
+                                                  (moment.favorates?.length ??
+                                                          0) -
+                                                      1)
+                                              ? '，'
+                                              : ''),
+                                      // 粗体
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    );
+                                  }).toList() ??
+                                  [],
+                            ],
+                          ),
+                        ),
+                ),
+              ),
+            ],
+            // 评论列表
+            if (moment.comments?.isNotEmpty ?? false) ...[
+              // 线条
+              Container(
+                height: 0.5,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? const Color(0xffdedede)
+                      : const Color(0xff2b2b2b),
+                ),
+              ),
+              // 评论列表
+              // 格式：名称：评论内容
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 0,
+                ),
+                child: ListBody(
+                  children: moment.comments?.map((e) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2),
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: e.user?.name ?? '',
+                                  style: TextStyle(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? const Color(0xff596b91)
+                                        : const Color(0xff808fa5),
+                                    fontSize: 14,
+                                    // 粗体
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const TextSpan(
+                                  text: '：',
+                                ),
+                                TextSpan(
+                                  text: e.content,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList() ??
+                      [],
+                ),
+              ),
+            ]
+          ],
+        ),
+      ),
+
+      const SizedBox(height: 10),
+    ];
+
     return Container(
       // 分割线
       decoration: BoxDecoration(
@@ -248,185 +412,13 @@ class MomentWidget extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    // 点赞列表
-                    Container(
-                      alignment: Alignment.topLeft,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? const Color(0xfff7f7f7)
-                            : const Color(0xff202020),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (moment.favorates?.isNotEmpty ?? false) ...[
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 5,
-                              ),
-                              child: DefaultTextStyle(
-                                style: TextStyle(
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? const Color(0xff596b91)
-                                      : const Color(0xff808fa5),
-                                  fontSize: 14,
-                                ),
-                                child: isDetail
-                                    ?
-                                    // 使用头像网格，每个头像32，间隔为4，外面套一层Row，左边是爱心右边是头像
-                                    Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 6, right: 4.0),
-                                            child: Icon(
-                                              CupertinoIcons.heart,
-                                              color: Theme.of(context)
-                                                          .brightness ==
-                                                      Brightness.light
-                                                  ? const Color(0xff596b91)
-                                                  : const Color(0xff808fa5),
-                                              size: 16,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 4),
-                                          Expanded(
-                                            child: Wrap(
-                                              spacing: 4,
-                                              runSpacing: 4,
-                                              children: moment.favorates!
-                                                  .map(
-                                                    (e) => ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              4),
-                                                      child: ImagePicture(
-                                                        url: e.avatar,
-                                                        width: 32,
-                                                        height: 32,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                  )
-                                                  .toList(),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    : Text.rich(
-                                        // 优化性能，爱心要嵌入到Text中
-                                        TextSpan(
-                                          children: [
-                                            WidgetSpan(
-                                              child: Icon(
-                                                CupertinoIcons.heart,
-                                                size: 16,
-                                                color: Theme.of(context)
-                                                            .brightness ==
-                                                        Brightness.light
-                                                    ? const Color(0xff596b91)
-                                                    : const Color(0xff808fa5),
-                                              ),
-                                            ),
-                                            ...moment.favorates?.map((e) {
-                                                  return TextSpan(
-                                                    text: (e.name ?? '') +
-                                                        ((moment.favorates
-                                                                    ?.indexOf(
-                                                                        e) !=
-                                                                (moment.favorates
-                                                                            ?.length ??
-                                                                        0) -
-                                                                    1)
-                                                            ? '，'
-                                                            : ''),
-                                                    // 粗体
-                                                    style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  );
-                                                }).toList() ??
-                                                [],
-                                          ],
-                                        ),
-                                      ),
-                              ),
-                            ),
-                          ],
-                          // 评论列表
-                          if (moment.comments?.isNotEmpty ?? false) ...[
-                            // 线条
-                            Container(
-                              height: 0.5,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? const Color(0xffdedede)
-                                    : const Color(0xff2b2b2b),
-                              ),
-                            ),
-                            // 评论列表
-                            // 格式：名称：评论内容
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 0,
-                              ),
-                              child: ListBody(
-                                children: moment.comments?.map((e) {
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 2),
-                                        child: Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: e.user?.name ?? '',
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                              .brightness ==
-                                                          Brightness.light
-                                                      ? const Color(0xff596b91)
-                                                      : const Color(0xff808fa5),
-                                                  fontSize: 14,
-                                                  // 粗体
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              const TextSpan(
-                                                text: '：',
-                                              ),
-                                              TextSpan(
-                                                text: e.content,
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    }).toList() ??
-                                    [],
-                              ),
-                            ),
-                          ]
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 10),
+                    if (!isDetail) ...container
                   ],
                 ),
               ),
             ],
           ),
+          if (isDetail) ...container
         ],
       ),
     );
