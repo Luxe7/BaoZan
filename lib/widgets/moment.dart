@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wechat/pages/index.dart';
 
 import '../models/moment.dart';
 import 'avatar_widget.dart';
@@ -93,14 +92,8 @@ class _MomentWidgetState extends State<MomentWidget> {
                                 runSpacing: 4,
                                 children: widget.moment.favorates!
                                     .map(
-                                      (e) => ClipRRect(
-                                        borderRadius: BorderRadius.circular(4),
-                                        child: ImagePicture(
-                                          url: e.avatar,
-                                          width: 32,
-                                          height: 32,
-                                          fit: BoxFit.cover,
-                                        ),
+                                      (e) => AvatarWidget(
+                                        user: e,
                                       ),
                                     )
                                     .toList(),
@@ -253,6 +246,9 @@ class _MomentWidgetState extends State<MomentWidget> {
                   children: [
                     NameWidget(
                         user: widget.moment.user,
+                        onChange: (name) {
+                          setState(() {});
+                        },
                         child: Text(
                           widget.moment.user?.name ?? '',
                           style: TextStyle(

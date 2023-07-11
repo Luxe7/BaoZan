@@ -16,7 +16,7 @@ import 'package:wechat/widgets/name_widget.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../utils/essay_analyser.dart';
-import '../widgets/image_picture.dart';
+
 import '../widgets/moment.dart';
 import 'moment_detail.dart';
 
@@ -26,6 +26,8 @@ List<Moment> moments = [];
 // 保存数据
 void saveData() {
   prefs?.setStringList('moments', Moment.encode(moments));
+// 保存myself
+  prefs?.setString('myself', jsonEncode(myself.toJson()));
 }
 
 // 读取数据

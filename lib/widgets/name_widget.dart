@@ -4,9 +4,11 @@ import 'package:wechat/models/user.dart';
 import '../pages/moments.dart';
 
 class NameWidget extends StatefulWidget {
-  const NameWidget({super.key, required this.child, required this.user});
+  const NameWidget(
+      {super.key, required this.child, required this.user, this.onChange});
   final User? user;
   final Widget child;
+  final Function(String?)? onChange;
   @override
   State<NameWidget> createState() => _NameWidgetState();
 }
@@ -43,6 +45,7 @@ class _NameWidgetState extends State<NameWidget> {
                   setState(() {
                     widget.user?.name = nameController.text;
                     saveData();
+                    widget.onChange?.call(widget.user?.name);
                   });
                   Navigator.of(context).pop();
                 },
