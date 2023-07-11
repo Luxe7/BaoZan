@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:wechat/main.dart';
 import 'package:wechat/models/user.dart';
 import 'package:wechat/models/favorates.dart';
 import 'package:wechat/widgets/index.dart';
@@ -425,11 +426,7 @@ class _PostEditPageState extends State<PostEditPage> {
                           id: '1',
                           content: _contentController.text,
                           pictures: pictures,
-                          user: User(
-                            id: '1',
-                            avatar: 'https://picsum.photos/250?image=9',
-                            name: '张三',
-                          ),
+                          user: myself,
                           favorates: tempFavorates.getList()));
                 },
                 child: const Text(

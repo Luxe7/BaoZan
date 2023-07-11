@@ -349,6 +349,12 @@ class _MomentsPageState extends State<MomentsPage> {
                 ),
               ),
             ),
+            // 留32的空间
+            SliverToBoxAdapter(
+              child: Container(
+                height: 32,
+              ),
+            ),
             // 列表
             SliverList(
               delegate: SliverChildBuilderDelegate(
