@@ -75,7 +75,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                           children: [
                             Padding(
                               padding:
-                                  const EdgeInsets.only(top: 6, right: 4.0),
+                                  const EdgeInsets.only(top: 8, right: 4.0),
                               child: Icon(
                                 CupertinoIcons.heart,
                                 color: Theme.of(context).brightness ==
@@ -106,13 +106,17 @@ class _MomentWidgetState extends State<MomentWidget> {
                           TextSpan(
                             children: [
                               WidgetSpan(
-                                child: Icon(
-                                  CupertinoIcons.heart,
-                                  size: 16,
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? const Color(0xff596b91)
-                                      : const Color(0xff808fa5),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 4.0, bottom: 2.0),
+                                  child: Icon(
+                                    CupertinoIcons.heart,
+                                    size: 14,
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? const Color(0xff596b91)
+                                        : const Color(0xff808fa5),
+                                  ),
                                 ),
                               ),
                               ...widget.moment.favorates?.map((e) {
