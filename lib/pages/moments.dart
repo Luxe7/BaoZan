@@ -94,6 +94,7 @@ class _MomentsPageState extends State<MomentsPage> {
       body: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification notification) {
           // 判断是否滑动到顶部
+          bool prevIsTop = isTop;
           if (notification.metrics.pixels <
               _expandedHeight - MediaQuery.of(context).padding.top) {
             // 滑动到顶部
@@ -101,7 +102,11 @@ class _MomentsPageState extends State<MomentsPage> {
           } else {
             isTop = false;
           }
-          if (mounted) setState(() {});
+          if (prevIsTop != isTop) {
+            if (mounted) {
+              setState(() {});
+            }
+          }
           return false;
         },
         child: CustomScrollView(
@@ -278,6 +283,9 @@ class _MomentsPageState extends State<MomentsPage> {
                       child: InkWell(
                         onTap: () {
                           DuPicker.assets(context: context).then((list) {
+                            if (list?.isEmpty ?? true) {
+                              return;
+                            }
                             Uint8List? byteData = list?[0];
                             if (byteData != null) {
                               // 转换为base64

@@ -392,16 +392,16 @@ class _MomentWidgetState extends State<MomentWidget> {
                           ),
                         ),
 
-                        // TextButton(
-                        //     onPressed: widget.onDelete?.call(widget.moment),
-                        //     child: Icon(
-                        //       Icons.delete,
-                        //       size: 15,
-                        //       color: Theme.of(context).brightness ==
-                        //               Brightness.light
-                        //           ? const Color(0xff596b91)
-                        //           : const Color(0xff808fa5),
-                        //     )),
+                        TextButton(
+                            onPressed: widget.onDelete?.call(widget.moment),
+                            child: Icon(
+                              CupertinoIcons.delete_solid,
+                              size: 15,
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? const Color(0xff596b91)
+                                  : const Color(0xff808fa5),
+                            )),
 
                         // 赞和评论的菜单按钮
                         // 菜单从左侧弹出，底色为#4c4c4c
