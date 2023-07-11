@@ -1,5 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:wechat/pages/index.dart';
 
 import '../models/moment.dart';
 import 'avatar_widget.dart';
@@ -40,6 +44,10 @@ class _MomentWidgetState extends State<MomentWidget> {
       '详情': widget.onDetail,
       '删除': widget.onDelete,
     };
+    void myFunction() {
+      // 按钮被点击时执行的代码
+      widget.onDelete?.call(widget.moment);
+    }
 
     var container = [
       // 点赞列表
@@ -352,7 +360,7 @@ class _MomentWidgetState extends State<MomentWidget> {
 
                     Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           '1分钟前',
@@ -364,8 +372,20 @@ class _MomentWidgetState extends State<MomentWidget> {
                             fontSize: 14,
                           ),
                         ),
+
+                        TextButton(
+                            onPressed: widget.onDelete?.call(widget.moment),
+                            child: Icon(
+                              Icons.delete,
+                              size: 15,
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? const Color(0xff596b91)
+                                  : const Color(0xff808fa5),
+                            )),
                         // 赞和评论的菜单按钮
                         // 菜单从左侧弹出，底色为#4c4c4c
+                        const Spacer(),
                         PopupMenuButton(
                           onSelected: (value) {
                             actionMap[value]?.call(widget.moment);
