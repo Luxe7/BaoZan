@@ -77,7 +77,8 @@ class DuPicker {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("目标赞数"),
+          //title: const Text("目标赞数"),
+          title: Text(title),
           content:
               // 使用CupertinoPicker.builder
               ConstrainedBox(

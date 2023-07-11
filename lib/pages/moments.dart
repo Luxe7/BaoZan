@@ -369,10 +369,19 @@ class _MomentsPageState extends State<MomentsPage> {
                     onDelete: (moment) {
                       moments.remove(moment);
                       if (mounted) {
-                        setState(() {});
+                        try {
+                          setState(() {
+                            // 在这里进行状态更新
+                          });
+                        } catch (error) {
+                          print(
+                              'Error occurred while calling setState: $error');
+                        }
+
+                        // setState(() {});
+                        // 保存
+                        saveData();
                       }
-                      // 保存
-                      saveData();
                     },
                     onLike: (moment) {
                       DuPicker.selectNumber(context,

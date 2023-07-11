@@ -14,6 +14,7 @@ import 'package:wechat/utils/index.dart';
 import '../models/moment.dart';
 
 int collectedNumber = 0;
+int collectedTime = 1;
 
 class PostEditPage extends StatefulWidget {
   const PostEditPage({Key? key, this.selectedAssets}) : super(key: key);
@@ -25,7 +26,6 @@ class PostEditPage extends StatefulWidget {
 class _PostEditPageState extends State<PostEditPage> {
   //已选中图片列表
   List<Uint8List> _selectedAssets = [];
-  int collectedNumber = 0;
 
   //内容输入控制器
   final TextEditingController _contentController = TextEditingController();
@@ -120,13 +120,38 @@ class _PostEditPageState extends State<PostEditPage> {
           const DividerWidget(),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),
-            leading: const Icon(CupertinoIcons.person_alt),
-            title: const Text("谁可以看"),
+            leading: const Icon(Icons.thumb_up_outlined),
+            title: const Text("目标已发布时间"),
             // 向右的箭头
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {},
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // 显示目标已发布时间
+                Text(collectedTime.toString()),
+                const Icon(Icons.chevron_right),
+              ],
+            ),
+            onTap: () async {
+              var result = await DuPicker.selectNumber(
+                context,
+                title: "目标时间（分钟）",
+                min: 1,
+                max: 360,
+                value: collectedTime,
+              );
+              collectedTime = result;
+              setState(() {});
+            },
           ),
-          const DividerWidget(),
+          // ListTile(
+          //   contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),
+          //   leading: const Icon(CupertinoIcons.person_alt),
+          //   title: const Text("谁可以看"),
+          //   // 向右的箭头
+          //   trailing: const Icon(Icons.chevron_right),
+          //   onTap: () {},
+          // ),
+          // const DividerWidget(),
         ],
       ),
     );

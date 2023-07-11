@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:wechat/pages/index.dart';
 
 import '../models/moment.dart';
+import '../utils/picker.dart';
 import 'avatar_widget.dart';
 import 'image_picture.dart';
 import 'name_widget.dart';
@@ -44,6 +45,15 @@ class _MomentWidgetState extends State<MomentWidget> {
       '详情': widget.onDetail,
       '删除': widget.onDelete,
     };
+
+    String getTimeString(int minutes) {
+      if (minutes < 60) {
+        return '$minutes分钟前';
+      } else {
+        int hours = minutes ~/ 60;
+        return '$hours小时前';
+      }
+    }
 
     var container = [
       // 点赞列表
@@ -358,27 +368,45 @@ class _MomentWidgetState extends State<MomentWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          '1分钟前',
-                          style: TextStyle(
-                            color:
+                        TextButton(
+                            onPressed: () async {
+                              var result = await DuPicker.selectNumber(
+                                context,
+                                title: "目标时间（分钟）",
+                                min: 1,
+                                max: 360,
+                                value: collectedTime,
+                              );
+                              collectedTime = result;
+                              setState(() {});
+                            },
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
                                 Theme.of(context).brightness == Brightness.light
                                     ? const Color(0xffb3b3b3)
                                     : const Color(0xff5d5d5d),
-                            fontSize: 14,
-                          ),
-                        ),
-
-                        TextButton(
-                            onPressed: widget.onDelete?.call(widget.moment),
-                            child: Icon(
-                              Icons.delete,
-                              size: 15,
-                              color: Theme.of(context).brightness ==
-                                      Brightness.light
-                                  ? const Color(0xff596b91)
-                                  : const Color(0xff808fa5),
+                              ),
+                              textStyle:
+                                  MaterialStateProperty.all(const TextStyle(
+                                fontSize: 14,
+                              )),
+                            ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(getTimeString(collectedTime)),
                             )),
+
+                        // TextButton(
+                        //     onPressed: widget.onDelete?.call(widget.moment),
+                        //     child: Icon(
+                        //       Icons.delete,
+                        //       size: 15,
+                        //       color: Theme.of(context).brightness ==
+                        //               Brightness.light
+                        //           ? const Color(0xff596b91)
+                        //           : const Color(0xff808fa5),
+                        //     )),
+
                         // 赞和评论的菜单按钮
                         // 菜单从左侧弹出，底色为#4c4c4c
                         const Spacer(),
