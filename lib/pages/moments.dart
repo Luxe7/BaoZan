@@ -12,6 +12,7 @@ import 'package:wechat/pages/index.dart';
 import 'package:wechat/pages/post.dart';
 import 'package:wechat/utils/index.dart';
 import 'package:wechat/widgets/avatar_widget.dart';
+import 'package:wechat/widgets/image_picture.dart';
 import 'package:wechat/widgets/name_widget.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
@@ -272,9 +273,48 @@ class _MomentsPageState extends State<MomentsPage> {
                       bottom: 20,
                       left: 0,
                       right: 0,
-                      child: Image.asset(
-                        'images/moments.jpg',
-                        fit: BoxFit.cover,
+                      child: InkWell(
+                        onTap: () {
+                          DuPicker.assets(context: context).then((list) {
+                            Uint8List? byteData = list?[0];
+                            if (byteData != null) {
+                              // 转换为base64
+                              List<int> imageData =
+                                  byteData.buffer.asUint8List();
+                              String base64Image =
+                                  'data:image/png;base64,${base64Encode(imageData)}';
+
+                              // 更新背景
+                              setState(() {
+                                myself.background = base64Image;
+                                saveData();
+                              });
+                            }
+                          });
+                        },
+                        child: ImagePicture(
+                          url: myself.background ?? 'images/moments.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    // 上下渐变
+                    Positioned(
+                      bottom: 20,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        height: 50,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color(0x00000000),
+                              Color(0x44000000),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     // 头像左边的名字

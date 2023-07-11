@@ -1,8 +1,5 @@
 //微信底部弹出
 import 'package:flutter/material.dart';
-import 'package:wechat/utils/essay_analyser.dart';
-import 'package:wechat_assets_picker/wechat_assets_picker.dart';
-import '/utils/index.dart';
 
 class DuBottomSheet extends StatelessWidget {
   const DuBottomSheet({super.key});
