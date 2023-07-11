@@ -366,7 +366,6 @@ class _MomentWidgetState extends State<MomentWidget> {
 
                     Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         InkWell(
                           onTap: () async {
@@ -393,7 +392,8 @@ class _MomentWidgetState extends State<MomentWidget> {
                         ),
 
                         TextButton(
-                            onPressed: widget.onDelete?.call(widget.moment),
+                            onPressed: () =>
+                                widget.onDelete?.call(widget.moment),
                             child: Icon(
                               CupertinoIcons.delete_solid,
                               size: 15,

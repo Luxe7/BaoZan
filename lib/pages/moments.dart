@@ -27,6 +27,7 @@ List<Moment> moments = [];
 
 // 保存数据
 void saveData() {
+  print(Moment.encode(moments));
   prefs?.setStringList('moments', Moment.encode(moments));
 // 保存myself
   prefs?.setString('myself', jsonEncode(myself.toJson()));
