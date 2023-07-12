@@ -27,7 +27,7 @@ class _MomentDetailPageState extends State<MomentDetailPage> {
               : Colors.black,
           icon: const Icon(
             WechatIcons.back,
-            size: 24,
+            size: 18,
           ),
         ),
         title: const Text(

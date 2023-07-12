@@ -115,7 +115,7 @@ class _MomentsPageState extends State<MomentsPage> {
           controller: _controller,
           slivers: [
             SliverAppBar(
-              toolbarHeight: 48,
+              toolbarHeight: Platform.isAndroid ? 40 : 48,
               systemOverlayStyle: (isLightForeground)
                   ? const SystemUiOverlayStyle(
                       statusBarColor: Colors.transparent,
@@ -149,7 +149,7 @@ class _MomentsPageState extends State<MomentsPage> {
                 color: isLightForeground ? Colors.white : Colors.black,
                 icon: const Icon(
                   WechatIcons.back,
-                  size: 24,
+                  size: 18,
                 ),
               ),
               // 右边照相
