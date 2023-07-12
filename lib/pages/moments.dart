@@ -12,6 +12,7 @@ import 'package:wechat/models/user.dart';
 import 'package:wechat/pages/index.dart';
 import 'package:wechat/pages/post.dart';
 import 'package:wechat/utils/index.dart';
+import 'package:wechat/wechat_icons_icons.dart';
 import 'package:wechat/widgets/avatar_widget.dart';
 import 'package:wechat/widgets/image_picture.dart';
 import 'package:wechat/widgets/name_widget.dart';
@@ -143,11 +144,11 @@ class _MomentsPageState extends State<MomentsPage> {
               centerTitle: true,
               // 左边返回
               leading: IconButton(
-                padding: const EdgeInsets.only(left: 0, right: 24),
+                padding: const EdgeInsets.only(left: 8, right: 24),
                 onPressed: () {},
                 color: isLightForeground ? Colors.white : Colors.black,
                 icon: const Icon(
-                  CupertinoIcons.back,
+                  WechatIcons.icon_back_arrow,
                   size: 24,
                 ),
               ),
@@ -255,7 +256,9 @@ class _MomentsPageState extends State<MomentsPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 24, right: 14.0),
                     child: Icon(
-                      isTop ? Icons.camera_alt : Icons.camera_alt_outlined,
+                      isTop
+                          ? WechatIcons.icons_filled_camera
+                          : Icons.camera_alt_outlined,
                       color: isLightForeground ? Colors.white : Colors.black,
                       size: 24,
                     ),

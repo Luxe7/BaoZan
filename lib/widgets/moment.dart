@@ -6,6 +6,7 @@ import 'package:wechat/pages/index.dart';
 
 import '../models/moment.dart';
 import '../utils/picker.dart';
+import '../wechat_icons_icons.dart';
 import 'avatar_widget.dart';
 import 'image_picture.dart';
 import 'name_widget.dart';
@@ -90,7 +91,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                               padding:
                                   const EdgeInsets.only(top: 8, right: 4.0),
                               child: Icon(
-                                CupertinoIcons.heart,
+                                WechatIcons.icons_outlined_like,
                                 color: Theme.of(context).brightness ==
                                         Brightness.light
                                     ? const Color(0xff596b91)
@@ -123,7 +124,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                                   padding: const EdgeInsets.only(
                                       right: 4.0, bottom: 2.0),
                                   child: Icon(
-                                    CupertinoIcons.heart,
+                                    WechatIcons.icons_outlined_like,
                                     size: 14,
                                     color: Theme.of(context).brightness ==
                                             Brightness.light
@@ -437,7 +438,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                               vertical: 5,
                             ),
                             child: Icon(
-                              CupertinoIcons.delete_solid,
+                              WechatIcons.icons_filled_delete,
                               size: 15,
                               color: Theme.of(context).brightness ==
                                       Brightness.light

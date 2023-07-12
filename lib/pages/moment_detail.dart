@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:wechat/models/moment.dart';
 import 'package:wechat/widgets/moment.dart';
 
+import '../wechat_icons_icons.dart';
+
 class MomentDetailPage extends StatefulWidget {
   const MomentDetailPage({super.key, required this.moment});
   final Moment moment;
@@ -24,7 +26,7 @@ class _MomentDetailPageState extends State<MomentDetailPage> {
               ? Colors.white
               : Colors.black,
           icon: const Icon(
-            CupertinoIcons.back,
+            WechatIcons.icon_back_arrow,
             size: 24,
           ),
         ),
