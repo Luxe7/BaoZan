@@ -6,6 +6,7 @@ import 'package:wechat/pages/index.dart';
 
 import '../models/moment.dart';
 import '../utils/picker.dart';
+import '../wechat_icons_icons.dart';
 import 'avatar_widget.dart';
 import 'image_picture.dart';
 import 'name_widget.dart';
@@ -90,7 +91,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                               padding:
                                   const EdgeInsets.only(top: 8, right: 4.0),
                               child: Icon(
-                                CupertinoIcons.heart,
+                                WechatIcons.outlined_like,
                                 color: Theme.of(context).brightness ==
                                         Brightness.light
                                     ? const Color(0xff596b91)
@@ -123,7 +124,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                                   padding: const EdgeInsets.only(
                                       right: 4.0, bottom: 2.0),
                                   child: Icon(
-                                    CupertinoIcons.heart,
+                                    WechatIcons.outlined_like,
                                     size: 14,
                                     color: Theme.of(context).brightness ==
                                             Brightness.light
@@ -322,36 +323,28 @@ class _MomentWidgetState extends State<MomentWidget> {
                         ),
                       ),
                     if ((widget.moment.pictures?.length ?? 0) == 1)
-                      Platform.isAndroid
-                          ? ConstrainedBox(
-                              constraints: const BoxConstraints(
+                      ConstrainedBox(
+                        constraints: Platform.isAndroid
+                            ? const BoxConstraints(
                                 maxWidth: 320,
                                 maxHeight: 320,
                                 minWidth: 70,
                                 minHeight: 100,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 48),
-                                child: ImagePicture(
-                                  url: widget.moment.pictures![0],
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            )
-                          : ConstrainedBox(
-                              constraints: const BoxConstraints(
+                              )
+                            : const BoxConstraints(
                                 maxWidth: 540,
                                 maxHeight: 540,
                                 minWidth: 70,
                                 minHeight: 100,
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 48),
-                                child: ImagePicture(
-                                  url: widget.moment.pictures![0],
-                                  fit: BoxFit.cover,
-                                ),
-                              )),
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 48),
+                          child: ImagePicture(
+                            url: widget.moment.pictures![0],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                     if (widget.moment.essay != null)
                       Container(
                         padding: const EdgeInsets.all(4),
@@ -445,7 +438,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                               vertical: 5,
                             ),
                             child: Icon(
-                              CupertinoIcons.delete_solid,
+                              WechatIcons.filled_delete,
                               size: 15,
                               color: Theme.of(context).brightness ==
                                       Brightness.light
