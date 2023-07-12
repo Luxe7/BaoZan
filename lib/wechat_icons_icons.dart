@@ -11,11 +11,15 @@
 ///      fonts:
 ///       - asset: fonts/WechatIcons.ttf
 ///
-///
-/// * Modern Pictograms, Copyright (c) 2012 by John Caserta. All rights reserved.
-///         Author:    John Caserta
+/// 
+/// * Entypo, Copyright (C) 2012 by Daniel Bruce
+///         Author:    Daniel Bruce
 ///         License:   SIL (http://scripts.sil.org/OFL)
-///         Homepage:  http://thedesignoffice.org/project/modern-pictograms/
+///         Homepage:  http://www.entypo.com
+/// * Linearicons Free, Copyright (C) Linearicons.com
+///         Author:    Perxis
+///         License:   CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+///         Homepage:  https://linearicons.com
 ///
 import 'package:flutter/widgets.dart';
 
@@ -25,14 +29,9 @@ class WechatIcons {
   static const _kFontFam = 'WechatIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData globe =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData icon_back_arrow =
-      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData icons_filled_camera =
-      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData icons_filled_delete =
-      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData icons_outlined_like =
-      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData back = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData filled_camera = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData filled_delete = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData outlined_like = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData outlined_camera = IconData(0xe826, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

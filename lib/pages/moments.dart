@@ -148,7 +148,7 @@ class _MomentsPageState extends State<MomentsPage> {
                 onPressed: () {},
                 color: isLightForeground ? Colors.white : Colors.black,
                 icon: const Icon(
-                  WechatIcons.icon_back_arrow,
+                  WechatIcons.back,
                   size: 24,
                 ),
               ),
@@ -257,8 +257,8 @@ class _MomentsPageState extends State<MomentsPage> {
                     padding: const EdgeInsets.only(left: 24, right: 14.0),
                     child: Icon(
                       isTop
-                          ? WechatIcons.icons_filled_camera
-                          : Icons.camera_alt_outlined,
+                          ? WechatIcons.filled_camera
+                          : WechatIcons.outlined_camera,
                       color: isLightForeground ? Colors.white : Colors.black,
                       size: 24,
                     ),

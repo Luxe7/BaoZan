@@ -91,7 +91,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                               padding:
                                   const EdgeInsets.only(top: 8, right: 4.0),
                               child: Icon(
-                                WechatIcons.icons_outlined_like,
+                                WechatIcons.outlined_like,
                                 color: Theme.of(context).brightness ==
                                         Brightness.light
                                     ? const Color(0xff596b91)
@@ -124,7 +124,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                                   padding: const EdgeInsets.only(
                                       right: 4.0, bottom: 2.0),
                                   child: Icon(
-                                    WechatIcons.icons_outlined_like,
+                                    WechatIcons.outlined_like,
                                     size: 14,
                                     color: Theme.of(context).brightness ==
                                             Brightness.light
@@ -438,7 +438,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                               vertical: 5,
                             ),
                             child: Icon(
-                              WechatIcons.icons_filled_delete,
+                              WechatIcons.filled_delete,
                               size: 15,
                               color: Theme.of(context).brightness ==
                                       Brightness.light
