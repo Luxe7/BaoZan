@@ -322,36 +322,28 @@ class _MomentWidgetState extends State<MomentWidget> {
                         ),
                       ),
                     if ((widget.moment.pictures?.length ?? 0) == 1)
-                      Platform.isAndroid
-                          ? ConstrainedBox(
-                              constraints: const BoxConstraints(
+                      ConstrainedBox(
+                        constraints: Platform.isAndroid
+                            ? const BoxConstraints(
                                 maxWidth: 320,
                                 maxHeight: 320,
                                 minWidth: 70,
                                 minHeight: 100,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 48),
-                                child: ImagePicture(
-                                  url: widget.moment.pictures![0],
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            )
-                          : ConstrainedBox(
-                              constraints: const BoxConstraints(
+                              )
+                            : const BoxConstraints(
                                 maxWidth: 540,
                                 maxHeight: 540,
                                 minWidth: 70,
                                 minHeight: 100,
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 48),
-                                child: ImagePicture(
-                                  url: widget.moment.pictures![0],
-                                  fit: BoxFit.cover,
-                                ),
-                              )),
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 48),
+                          child: ImagePicture(
+                            url: widget.moment.pictures![0],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                     if (widget.moment.essay != null)
                       Container(
                         padding: const EdgeInsets.all(4),
