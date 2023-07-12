@@ -166,6 +166,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.2"
+  flutter_pangle_ads:
+    dependency: "direct main"
+    description:
+      name: flutter_pangle_ads
+      sha256: "80ce8c00294a4746fb3c046290b5988ff1460e68dbc26b1f5c79f943e917b812"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.7.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
