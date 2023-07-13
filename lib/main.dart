@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'models/user.dart';
 import 'pages/index.dart';
 import 'package:wechat/pages/moments.dart';
+import 'package:flutter_pangle_ads/flutter_pangle_ads.dart';
 
 SharedPreferences? prefs;
 

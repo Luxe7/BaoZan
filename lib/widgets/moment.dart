@@ -399,7 +399,7 @@ class _MomentWidgetState extends State<MomentWidget> {
                             style: TextStyle(
                               color: Theme.of(context).brightness ==
                                       Brightness.light
-                                  ? const Color(0xffb3b3b3)
+                                  ? const Color(0xff747472)
                                   : const Color(0xffffffff),
                               fontSize: 14,
                             ),
