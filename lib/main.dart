@@ -5,10 +5,6 @@ import 'pages/index.dart';
 import 'package:wechat/pages/moments.dart';
 import 'package:flutter_pangle_ads/flutter_pangle_ads.dart';
 
-/// [appId] 应用ID
-var appId = "2123";
-final ad = FlutterPangleAds.initAd(appId);
-
 SharedPreferences? prefs;
 
 User myself = User(

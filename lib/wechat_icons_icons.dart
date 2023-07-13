@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/WechatIcons.ttf
 ///
-/// 
+///
 /// * Entypo, Copyright (C) 2012 by Daniel Bruce
 ///         Author:    Daniel Bruce
 ///         License:   SIL (http://scripts.sil.org/OFL)
@@ -29,9 +29,14 @@ class WechatIcons {
   static const _kFontFam = 'WechatIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData back = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData filled_camera = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData filled_delete = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData outlined_like = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData outlined_camera = IconData(0xe826, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData back =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData filled_camera =
+      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData filled_delete =
+      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData outlined_like =
+      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData outlined_camera =
+      IconData(0xe826, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
