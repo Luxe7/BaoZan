@@ -55,7 +55,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      //home: const PostEditPage(),
       darkTheme: ThemeData(
         pageTransitionsTheme: const PageTransitionsTheme(builders: {
           TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
@@ -95,10 +94,12 @@ class MyApp extends StatelessWidget {
         ),
         splashColor: Colors.white30,
       ),
-      home: const ScrollConfiguration(
-        behavior: BouncingScrollBehavior(),
-        child: MomentsPage(),
-      ),
+      home: StartPage(),
+      // const ScrollConfiguration(
+      //   behavior: BouncingScrollBehavior(),
+      //   //child: MomentsPage(),
+
+      // ),
     );
   }
 }

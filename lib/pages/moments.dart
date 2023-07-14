@@ -145,7 +145,9 @@ class _MomentsPageState extends State<MomentsPage> {
               // 左边返回
               leading: IconButton(
                 padding: const EdgeInsets.only(left: 8, right: 24),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 color: isLightForeground ? Colors.white : Colors.black,
                 icon: const Icon(
                   WechatIcons.back,
