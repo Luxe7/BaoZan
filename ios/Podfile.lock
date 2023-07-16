@@ -1,5 +1,21 @@
 PODS:
+  - Ads-CN (5.4.0.5):
+    - Ads-CN/BUAdSDK (= 5.4.0.5)
+  - Ads-CN/BUAdSDK (5.4.0.5):
+    - BURelyFoundation/CSJ (= 0.3.0.4)
+  - BURelyFoundation/AFNetworking (0.3.0.4)
+  - BURelyFoundation/BURelyFoundation (0.3.0.4)
+  - BURelyFoundation/CSJ (0.3.0.4):
+    - BURelyFoundation/BURelyFoundation
+    - BURelyFoundation/HM
+    - BURelyFoundation/NETWork
+  - BURelyFoundation/HM (0.3.0.4)
+  - BURelyFoundation/NETWork (0.3.0.4):
+    - BURelyFoundation/AFNetworking
   - Flutter (1.0.0)
+  - flutter_pangle_ads (2.7.0):
+    - Ads-CN (>= 5.0.0.5)
+    - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -16,15 +32,23 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - flutter_pangle_ads (from `.symlinks/plugins/flutter_pangle_ads/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
 
+SPEC REPOS:
+  trunk:
+    - Ads-CN
+    - BURelyFoundation
+
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_pangle_ads:
+    :path: ".symlinks/plugins/flutter_pangle_ads/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
@@ -37,7 +61,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/video_player_avfoundation/ios"
 
 SPEC CHECKSUMS:
+  Ads-CN: 02359d8c0523c69702837938cd962d79d55e4c2d
+  BURelyFoundation: f6dc8547c858e7f97c1a0ec31a0c81b62f657892
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_pangle_ads: 376f2fbee6771ff8ff336f44c18358c65c21e320
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
