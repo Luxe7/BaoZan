@@ -26,7 +26,11 @@ class DeveloperInfoPage extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Text(
-              '''联系我们\nLuxe7@foxmail.com\n''',
+              '''Github开源地址：
+https://github.com/Luxe7/BaoZan
+
+联系我们：
+Luxe7@foxmail.com\n''',
               style: TextStyle(fontSize: 16),
             ),
           ),
