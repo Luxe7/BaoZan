@@ -38,3 +38,6 @@
 ### Luxe7：一个普通路过的菠萝李子水蜜桃品鉴爱好者
 
 ### 联系我们：<luxe7@foxmail.com>
+
+### 如果有帮助到你，并且你想请开发者喝杯咖啡：
+ ![Alt text](https://github.com/Luxe7/BaoZan/blob/main/images/shoukuanma.jpg)
