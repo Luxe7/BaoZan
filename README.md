@@ -40,4 +40,4 @@
 ### 联系我们：<luxe7@foxmail.com>
 
 ### 如果有帮助到你，并且你想请开发者喝杯咖啡：
- ![Alt text-w25](https://github.com/Luxe7/BaoZan/blob/main/images/shoukuanma.jpg)
+html <div align=center> <img src="https://github.com/Luxe7/BaoZan/blob/main/images/shoukuanma.jpg" width = 50%/> </div>
