@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wechat/pages/index.dart';
+import 'package:wechat/utils/index.dart';
 import 'index.dart';
 
 class StartPage extends StatelessWidget {
@@ -9,7 +10,7 @@ class StartPage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('爆赞：你的朋友圈集赞助手'),
+          title: const Text('爆赞：你的朋友圈集赞助手'),
           actions: [
             IconButton(
               icon: Icon(Icons.info),
@@ -51,7 +52,12 @@ class StartPage extends StatelessWidget {
                 },
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Document()),
+                  );
+                },
                 child: Text('使用说明'),
               ),
             ],

@@ -22,15 +22,21 @@ class DeveloperInfoPage extends StatelessWidget {
             description: '一个普通路过的菠萝李子水蜜桃品鉴大师',
             image: AssetImage('images/Luxe7.jpg'),
           ),
+          Spacer(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              '''Github开源地址：
+https://github.com/Luxe7/BaoZan
+
+联系我们：
+Luxe7@foxmail.com\n''',
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
         ],
       ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Text(
-          '''联系我们\nLuxe7@foxmail.com''',
-          style: TextStyle(fontSize: 16),
-        ),
-      ),
+      // bottomNavigationBar:
     );
   }
 }

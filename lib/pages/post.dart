@@ -81,15 +81,15 @@ class _PostEditPageState extends State<PostEditPage> {
       padding: const EdgeInsets.only(top: 100),
       child: Column(
         children: [
-          const DividerWidget(),
-          ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),
-            leading: const Icon(Icons.location_on_outlined),
-            title: const Text("所在位置"),
-            // 向右的箭头
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {},
-          ),
+          // const DividerWidget(),
+          // ListTile(
+          //   contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),
+          //   leading: const Icon(Icons.location_on_outlined),
+          //   title: const Text("所在位置"),
+          //   // 向右的箭头
+          //   trailing: const Icon(Icons.chevron_right),
+          //   onTap: () {},
+          // ),
           const DividerWidget(),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: pagePadding),

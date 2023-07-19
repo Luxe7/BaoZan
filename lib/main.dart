@@ -9,8 +9,8 @@ SharedPreferences? prefs;
 
 User myself = User(
   id: '1',
-  name: '小明',
-  avatar: 'https://picsum.photos/250?image=9',
+  name: 'oboard',
+  avatar: 'images/oboard.jpg',
 );
 
 void main() {
