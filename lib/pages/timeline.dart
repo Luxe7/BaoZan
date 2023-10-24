@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wechat/pages/index.dart';
-import 'package:wechat/utils/index.dart';
-import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class TimeLinePage extends StatefulWidget {
   const TimeLinePage({super.key});

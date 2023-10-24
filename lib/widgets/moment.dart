@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wechat/pages/index.dart';
 
 import '../models/moment.dart';
 import '../utils/picker.dart';

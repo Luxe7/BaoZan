@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class DeveloperInfoPage extends StatelessWidget {
+  const DeveloperInfoPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        // backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text('开发者信息'),
       ),
@@ -47,6 +49,7 @@ class DeveloperCard extends StatelessWidget {
   final ImageProvider image;
 
   const DeveloperCard({
+    super.key,
     required this.name,
     required this.description,
     required this.image,
@@ -55,26 +58,27 @@ class DeveloperCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Row(
         children: [
           CircleAvatar(
             backgroundImage: image,
             radius: 40,
           ),
-          SizedBox(width: 16.0),
+          const SizedBox(width: 16.0),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   name,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Text(
                   description,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),

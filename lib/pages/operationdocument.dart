@@ -7,8 +7,6 @@ class Document extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         title: const Text('使用说明'),
       ),
       body: Container(
@@ -17,7 +15,7 @@ class Document extends StatelessWidget {
         child: RichText(
             text: const TextSpan(
           text: "应用中的可自定义内容：\n",
-          style: TextStyle(color: Colors.black, fontSize: 20.0),
+          style: TextStyle(fontSize: 20.0),
           children: <TextSpan>[
             TextSpan(
               text: '''
@@ -26,7 +24,7 @@ class Document extends StatelessWidget {
                   用户自己的头像：点击更改即可\n
                   已发表的时间：点击后可选择时间，最大值为360min\n
                   期望得到的赞数：点击后可选择赞数，最大值为449\n''',
-              style: TextStyle(color: Colors.black, fontSize: 15.0),
+              style: TextStyle(fontSize: 15.0),
             )
           ],
         )),

@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:wechat/models/user.dart';
-
 List<String> _nicknames = '''阿汐汐汐汐
 百合
 夏时

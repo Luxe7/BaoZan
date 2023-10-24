@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/user.dart';
 import 'pages/index.dart';
-import 'package:wechat/pages/moments.dart';
-import 'package:flutter_pangle_ads/flutter_pangle_ads.dart';
 
 SharedPreferences? prefs;
 
@@ -61,6 +59,7 @@ class MyApp extends StatelessWidget {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
         }),
         primarySwatch: Colors.green,
+        useMaterial3: false,
         // 扩大圆角
         filledButtonTheme: FilledButtonThemeData(
             style: ButtonStyle(
@@ -85,16 +84,16 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xff222222),
           elevation: 0,
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(color: Colors.white),
           centerTitle: true,
           titleTextStyle: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 18,
           ),
         ),
         splashColor: Colors.white30,
       ),
-      home: StartPage(),
+      home: const StartPage(),
       // const ScrollConfiguration(
       //   behavior: BouncingScrollBehavior(),
       //   //child: MomentsPage(),
